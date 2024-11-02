@@ -21,6 +21,7 @@
 		bind:this={videoElement}
 		poster={video.media.thumbnail}
 		autoplay={active}
+		loop
 	>
 		<source src={video.media.src_url} />
 	</video>
