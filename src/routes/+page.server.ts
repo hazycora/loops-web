@@ -23,6 +23,6 @@ export const actions = {
 		const tokenData = <{ auth_token: string }>await authResponse.json()
 		cookies.set('token', tokenData.auth_token, { path: '/' })
 
-		redirect(307, '/feed')
+		redirect(303, '/feed')
 	}
 }
