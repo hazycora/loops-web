@@ -21,5 +21,7 @@ export async function load({ fetch, url, cookies }) {
 			meta: Meta
 		}
 	>await feedResponse.json()
-	return feedData
+	return {
+		feed: feedData
+	}
 }

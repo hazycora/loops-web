@@ -1,15 +1,17 @@
 <script lang="ts">
-	import FeedVideo from '$lib/FeedVideo.svelte'
+	import Feed from '$lib/Feed.svelte'
 
 	export let data
-	$: videos = data.data
-	$: console.log(videos)
 </script>
 
-<h1>for you :3</h1>
+<div class="app">
+	<Feed feed={data.feed} />
+</div>
 
-{#each videos as video}
-	<FeedVideo {video} />
-{/each}
-
-<a href="/feed?cursor={data.meta.next_cursor}">Next page</a>
+<style lang="postcss">
+	.app {
+		height: 100%;
+		display: grid;
+		place-items: center;
+	}
+</style>

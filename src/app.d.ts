@@ -9,6 +9,12 @@ declare global {
 		// interface Platform {}
 	}
 
+	interface Feed {
+		data: Video[]
+		links: Links
+		meta: Meta
+	}
+
 	interface Video {
 		id: string
 		account: Account
