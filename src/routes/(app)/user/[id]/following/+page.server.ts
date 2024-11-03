@@ -6,21 +6,24 @@ async function getAccount(id: string, options: { fetch: FetchFunction }) {
 	return <Account>await userResponse.json()
 }
 
-async function getAccountFeed(id: string, options: { fetch: FetchFunction }) {
+async function getAccountFollowing(
+	id: string,
+	options: { fetch: FetchFunction }
+) {
 	const { fetch } = options
-	const userVideosResponse = await fetch(`/api/v0/user/videos/${id}`)
-	const feed = <Feed>await userVideosResponse.json()
-	return await extendPaginated(feed, { fetch, pages: 1 })
+	const userFollowingResponse = await fetch(`/api/v0/user/following/byId/${id}`)
+	const following = <Paginated<Account>>await userFollowingResponse.json()
+	return extendPaginated(following, { fetch, pages: 2 })
 }
 
 export async function load({ fetch, params }) {
 	const id = params.id
-	const [accountData, accountVideos] = await Promise.all([
+	const [accountData, accountFollowing] = await Promise.all([
 		await getAccount(id, { fetch }),
-		await getAccountFeed(id, { fetch })
+		await getAccountFollowing(id, { fetch })
 	])
 	return {
 		account: accountData,
-		feed: accountVideos
+		accounts: accountFollowing
 	}
 }

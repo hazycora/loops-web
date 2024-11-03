@@ -1,4 +1,4 @@
-import extendFeed from '$lib/extendFeed.js'
+import extendPaginated from '$lib/extendPaginated.js'
 
 async function loadVideoWithContext(
 	id: string,
@@ -15,7 +15,7 @@ async function loadVideoWithContext(
 	let attempts = 0
 	// TODO: refactor once API makes this easier
 	while (accountFeedIndex === -1 && attempts < 5) {
-		accountFeed = await extendFeed(accountFeed, { fetch })
+		accountFeed = await extendPaginated(accountFeed, { fetch })
 		accountFeedIndex = accountFeed.data.findIndex(v => v.id === video.id)
 		attempts++
 	}

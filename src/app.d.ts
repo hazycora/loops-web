@@ -14,11 +14,13 @@ declare global {
 		init?: RequestInit
 	) => Promise<Response>
 
-	interface Feed {
-		data: Video[]
+	interface Paginated<Type> {
+		data: Type[]
 		links: Links
-		meta: Meta
+		meta
 	}
+
+	type Feed = Paginated<Video>
 
 	interface Video {
 		id: string

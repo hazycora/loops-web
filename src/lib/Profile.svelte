@@ -8,7 +8,7 @@
 </script>
 
 <div class="profile">
-	<div class="upfront">
+	<a href="/user/{account.id}" class="upfront">
 		<img src={account.avatar} alt="" class="avatar" />
 		<div class="names">
 			{#if account.username != account.name}
@@ -16,16 +16,20 @@
 			{/if}
 			<span class="username">@{account.username}</span>
 		</div>
-	</div>
+	</a>
 	<div class="stats">
-		<dl>
-			<dd>{account.follower_count}</dd>
-			<dt>Followers</dt>
-		</dl>
-		<dl>
-			<dd>{account.follower_count}</dd>
-			<dt>Following</dt>
-		</dl>
+		<a href="/user/{account.id}/followers">
+			<dl>
+				<dd>{account.follower_count}</dd>
+				<dt>Followers</dt>
+			</dl>
+		</a>
+		<a href="/user/{account.id}/following">
+			<dl>
+				<dd>{account.follower_count}</dd>
+				<dt>Following</dt>
+			</dl>
+		</a>
 	</div>
 	{#if account.bio}
 		<p class="bio">{account.bio}</p>
@@ -43,6 +47,8 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+		color: inherit;
+		text-decoration: none;
 	}
 	.avatar {
 		width: 3rem;
@@ -72,16 +78,23 @@
 		margin-block: 0.5rem;
 		flex-wrap: wrap;
 		row-gap: 0.125rem;
-
+		a {
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+			color: inherit;
+		}
 		dl {
 			margin: 0;
 			display: flex;
 			gap: 0.375rem;
 			width: fit-content;
-			color: var(--muted-clr);
+			dt {
+				color: var(--muted-clr);
+			}
 			dd {
 				margin: 0;
-				color: white;
 				font-weight: 600;
 			}
 		}

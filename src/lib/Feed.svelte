@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import FeedVideo from './FeedVideo.svelte'
-	import extendFeed from './extendFeed'
+	import extendPaginated from './extendPaginated'
 
 	export let feed: Feed
 	export let startIndex = 0
@@ -15,7 +15,7 @@
 	async function loadMore() {
 		if (fetching) return
 		fetching = true
-		feed = await extendFeed(feed)
+		feed = await extendPaginated(feed)
 		fetching = false
 	}
 

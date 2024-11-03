@@ -1,7 +1,7 @@
 import { proxyApiUrl } from './proxyApiUrl'
 
-export default async function extendFeed(
-	feed: Feed,
+export default async function extendPaginated<T>(
+	feed: Paginated<T>,
 	options: {
 		fetch?: FetchFunction
 		pages?: number
@@ -15,7 +15,7 @@ export default async function extendFeed(
 			if (!pageResponse.ok) {
 				break
 			}
-			const page = <Feed>await pageResponse.json()
+			const page = <Paginated<T>>await pageResponse.json()
 			feed.data.push(...page.data)
 			feed.links.next = page.links.next
 			feed.meta.next_cursor = page.meta.next_cursor
