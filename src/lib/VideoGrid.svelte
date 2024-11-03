@@ -26,7 +26,6 @@
 		aspect-ratio: 9 / 16;
 		overflow: hidden;
 		border-radius: 0.5rem;
-		object-fit: cover;
 		text-decoration: none;
 		color: inherit;
 
@@ -37,6 +36,7 @@
 			user-select: none;
 			width: 100%;
 			height: 100%;
+			object-fit: cover;
 		}
 		.caption {
 			user-select: none;

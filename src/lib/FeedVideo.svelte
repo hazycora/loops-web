@@ -44,12 +44,12 @@
 		> * {
 			grid-area: 1 / 1;
 		}
-		aspect-ratio: 9/16;
 		height: 100%;
 		& video {
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
+			object-position: center;
 			overflow: hidden;
 		}
 	}

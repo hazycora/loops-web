@@ -72,6 +72,18 @@ declare global {
 		prev_cursor: string
 	}
 
+	interface Comment {
+		account: Account
+		caption: string
+		children: Comment[]
+		created_at: string
+		id: string
+		liked: boolean
+		likes: number
+		replies: number
+		url: string
+	}
+
 	interface FollowState {
 		followed_by: boolean
 		following: boolean
