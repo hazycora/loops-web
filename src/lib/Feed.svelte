@@ -81,7 +81,7 @@
 			{#await comments}
 				<LoadingSpinner />
 			{:then comments}
-				{#if comments.data.length > 0}
+				{#if comments && comments.data.length > 0}
 					<ul class="comments">
 						{#each comments.data as comment}
 							<li>
