@@ -13,3 +13,12 @@
 		<slot />
 	{/if}
 </div>
+
+<style lang="postcss">
+	.account-list {
+		display: grid;
+		gap: 0.5rem;
+		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+		height: min-content;
+	}
+</style>
