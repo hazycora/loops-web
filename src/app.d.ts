@@ -72,6 +72,11 @@ declare global {
 		prev_cursor: string
 	}
 
+	interface FollowState {
+		followed_by: boolean
+		following: boolean
+	}
+
 	declare module '*.svg?c' {
 		import { ComponentType, SvelteComponent } from 'svelte'
 		const icon: ComponentType<SvelteComponent>

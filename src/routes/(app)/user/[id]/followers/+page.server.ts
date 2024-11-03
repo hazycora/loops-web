@@ -1,11 +1,5 @@
 import extendPaginated from '$lib/extendPaginated'
 
-async function getAccount(id: string, options: { fetch: FetchFunction }) {
-	const { fetch } = options
-	const userResponse = await fetch(`/api/v0/user/id/${id}`)
-	return <Account>await userResponse.json()
-}
-
 async function getAccountFollowers(
 	id: string,
 	options: { fetch: FetchFunction }
@@ -18,12 +12,10 @@ async function getAccountFollowers(
 
 export async function load({ fetch, params }) {
 	const id = params.id
-	const [accountData, accountFollowers] = await Promise.all([
-		await getAccount(id, { fetch }),
-		await getAccountFollowers(id, { fetch })
-	])
+	const accountFollowers = await getAccountFollowers(id, {
+		fetch
+	})
 	return {
-		account: accountData,
 		accounts: accountFollowers
 	}
 }

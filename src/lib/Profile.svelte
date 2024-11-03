@@ -1,10 +1,32 @@
 <script lang="ts">
 	import { page } from '$app/stores'
 	import GearFine from 'phosphor-svelte/lib/GearFine'
+	import UserPlus from 'phosphor-svelte/lib/UserPlus'
 	import Button from './Button.svelte'
 	export let account: Account
+	export let followState: FollowState
 
 	$: self = $page.data.self
+
+	async function followAccount() {
+		const followResponse = await fetch(`/api/v0/follow/${account.id}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({})
+		})
+		followState = await followResponse.json()
+		console.log(followState)
+	}
+
+	async function unfollowAccount() {
+		const followResponse = await fetch(`/api/v0/unfollow/${account.id}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({})
+		})
+		followState = await followResponse.json()
+		console.log(followState)
+	}
 </script>
 
 <div class="profile">
@@ -37,6 +59,10 @@
 	<div class="actions">
 		{#if self && self.id == account.id}
 			<Button href="/settings" icon={GearFine} text="Settings" />
+		{:else if !followState.following}
+			<Button on:click={followAccount} icon={UserPlus} text="Follow" />
+		{:else}
+			<Button on:click={unfollowAccount} icon={UserPlus} text="Unfollow" />
 		{/if}
 	</div>
 </div>
