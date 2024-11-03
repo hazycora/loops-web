@@ -9,6 +9,11 @@ declare global {
 		// interface Platform {}
 	}
 
+	type FetchFunction = (
+		input: RequestInfo | URL,
+		init?: RequestInit
+	) => Promise<Response>
+
 	interface Feed {
 		data: Video[]
 		links: Links
@@ -18,7 +23,7 @@ declare global {
 	interface Video {
 		id: string
 		account: Account
-		caption: string
+		caption?: string
 		url: string
 		is_owner: boolean
 		is_sensitive: boolean

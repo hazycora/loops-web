@@ -1,19 +1,9 @@
-import { redirect } from '@sveltejs/kit'
-
-export async function load({ fetch, url, cookies }) {
+export async function load({ fetch, url }) {
 	const cursor = url.searchParams.get('cursor')
-	const token = cookies.get('token')
-	if (!token) {
-		redirect(307, '/')
-	}
 	const feedUrl = cursor
 		? `/api/v0/feed/for-you?cursor=${cursor}`
 		: '/api/v0/feed/for-you'
-	const feedResponse = await fetch(feedUrl, {
-		headers: {
-			Authorization: `Bearer ${token}`
-		}
-	})
+	const feedResponse = await fetch(feedUrl)
 	const feedData = <
 		{
 			data: Video[]

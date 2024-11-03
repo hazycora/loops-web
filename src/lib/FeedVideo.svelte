@@ -22,15 +22,18 @@
 		poster={video.media.thumbnail}
 		autoplay={active}
 		loop
+		playsInline
 	>
 		<source src={video.media.src_url} />
 	</video>
 	<div class="details">
-		<a href="/@{video.account.username}" class="author">
+		<a href="/user/{video.account.id}" class="author">
 			<img src={video.account.avatar} alt="" class="avatar" />
 			<span>@{video.account.username}</span>
 		</a>
-		<p class="caption">{video.caption}</p>
+		{#if video.caption}
+			<p class="caption">{video.caption}</p>
+		{/if}
 	</div>
 </div>
 
@@ -47,13 +50,15 @@
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
+			overflow: hidden;
 		}
 	}
 	.details {
 		position: relative;
 		isolation: isolate;
 		padding: 0.5rem;
-		filter: drop-shadow(0 0 0.25rem rgb(0 0 0 / 0.5));
+		filter: drop-shadow(0 0 0.5rem rgb(0 0 0 / 0.75))
+			drop-shadow(0 0 0.125rem rgb(0 0 0 / 0.5));
 		&::before {
 			display: block;
 			position: absolute;
@@ -65,7 +70,7 @@
 			background-image: linear-gradient(
 				to bottom,
 				transparent,
-				rgb(0 0 0 / 0.25) 1rem
+				rgb(0 0 0 / 0.025) 1rem
 			);
 		}
 		height: min-content;
@@ -84,6 +89,9 @@
 		> img {
 			display: block;
 			width: 100%;
+			aspect-ratio: 1;
+			overflow: hidden;
+			object-fit: cover;
 			border-radius: 100%;
 		}
 	}

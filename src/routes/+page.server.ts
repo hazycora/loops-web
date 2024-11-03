@@ -1,5 +1,12 @@
 import { error, redirect } from '@sveltejs/kit'
 
+export async function load({ cookies }) {
+	const token = cookies.get('token')
+	if (token) {
+		redirect(303, '/feed')
+	}
+}
+
 export const actions = {
 	default: async ({ fetch, request, cookies }) => {
 		const data = await request.formData()

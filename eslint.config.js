@@ -1,32 +1,106 @@
-import eslint from '@eslint/js';
-import prettier from 'eslint-config-prettier';
-import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import globals from 'globals'
+import tsParser from '@typescript-eslint/parser'
+import parser from 'svelte-eslint-parser'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import js from '@eslint/js'
+import { FlatCompat } from '@eslint/eslintrc'
 
-export default tseslint.config(
-	eslint.configs.recommended,
-	...tseslint.configs.recommended,
-	...svelte.configs['flat/recommended'],
-	prettier,
-	...svelte.configs['flat/prettier'],
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const compat = new FlatCompat({
+	baseDirectory: __dirname,
+	recommendedConfig: js.configs.recommended,
+	allConfig: js.configs.all
+})
+
+export default [
 	{
+		ignores: [
+			'**/.DS_Store',
+			'**/node_modules',
+			'build',
+			'.svelte-kit',
+			'package',
+			'**/.env',
+			'**/.env.*',
+			'!**/.env.example',
+			'**/pnpm-lock.yaml',
+			'**/package-lock.json',
+			'**/yarn.lock'
+		]
+	},
+	...compat.extends(
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:svelte/recommended',
+		'prettier'
+	),
+	{
+		plugins: {
+			'@typescript-eslint': typescriptEslint
+		},
+
 		languageOptions: {
 			globals: {
 				...globals.browser,
 				...globals.node
+			},
+
+			parser: tsParser,
+			ecmaVersion: 2020,
+			sourceType: 'module',
+
+			parserOptions: {
+				extraFileExtensions: ['.svelte']
 			}
+		},
+
+		rules: {
+			'svelte/block-lang': [
+				'error',
+				{
+					enforceScriptPresent: false,
+					enforceStylePresent: false,
+					script: 'ts',
+					style: 'postcss'
+				}
+			],
+
+			'no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_'
+				}
+			],
+
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_'
+				}
+			],
+
+			'@typescript-eslint/no-empty-object-type': [
+				'error',
+				{
+					allowInterfaces: 'with-single-extends'
+				}
+			]
 		}
 	},
 	{
 		files: ['**/*.svelte'],
+
 		languageOptions: {
+			parser: parser,
+			ecmaVersion: 5,
+			sourceType: 'script',
+
 			parserOptions: {
-				parser: tseslint.parser
+				parser: '@typescript-eslint/parser'
 			}
 		}
-	},
-	{
-		ignores: ['build/', '.svelte-kit/', 'dist/']
 	}
-);
+]
