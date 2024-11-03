@@ -13,5 +13,8 @@
 	.profile {
 		width: 100%;
 		height: 100%;
+		> :global(:first-child) {
+			margin-block-end: 1rem;
+		}
 	}
 </style>
