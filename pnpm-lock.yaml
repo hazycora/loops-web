@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      phosphor-svelte:
+        specifier: ^2.0.1
+        version: 2.0.1(svelte@4.2.19)
     devDependencies:
       '@besties/eslint-config':
         specifier: 0.2.5
@@ -1064,6 +1068,11 @@ packages:
 
   periscopic@3.1.0:
     resolution: {integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==}
+
+  phosphor-svelte@2.0.1:
+    resolution: {integrity: sha512-2Ryvaf1sfCNOF0zTQVghtxOs/6JKn9MV+e9uluNAT9wAosgNYnaBD210WcFGRrva1sF8cddv7EWSS//ITNN4mg==}
+    peerDependencies:
+      svelte: '>=3'
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -2268,6 +2277,10 @@ snapshots:
       '@types/estree': 1.0.6
       estree-walker: 3.0.3
       is-reference: 3.0.2
+
+  phosphor-svelte@2.0.1(svelte@4.2.19):
+    dependencies:
+      svelte: 4.2.19
 
   picocolors@1.1.1: {}
 

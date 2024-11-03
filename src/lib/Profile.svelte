@@ -1,5 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores'
+	import GearFine from 'phosphor-svelte/lib/GearFine'
+	import Button from './Button.svelte'
 	export let account: Account
+
+	$: self = $page.data.self
 </script>
 
 <div class="profile">
@@ -14,17 +19,22 @@
 	</div>
 	<div class="stats">
 		<dl>
-			<dt>Followers</dt>
 			<dd>{account.follower_count}</dd>
+			<dt>Followers</dt>
 		</dl>
 		<dl>
-			<dt>Following</dt>
 			<dd>{account.follower_count}</dd>
+			<dt>Following</dt>
 		</dl>
 	</div>
 	{#if account.bio}
 		<p class="bio">{account.bio}</p>
 	{/if}
+	<div class="actions">
+		{#if self && self.id == account.id}
+			<Button href="/settings" icon={GearFine} text="Settings" />
+		{/if}
+	</div>
 </div>
 
 <style lang="postcss">
@@ -67,7 +77,6 @@
 			margin: 0;
 			display: flex;
 			gap: 0.375rem;
-			flex-direction: row-reverse;
 			width: fit-content;
 			color: var(--muted-clr);
 			dd {
@@ -76,5 +85,9 @@
 				font-weight: 600;
 			}
 		}
+	}
+
+	.actions {
+		margin-block-start: 0.75rem;
 	}
 </style>

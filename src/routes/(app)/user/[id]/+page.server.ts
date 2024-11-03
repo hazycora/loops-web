@@ -1,5 +1,4 @@
 import extendFeed from '$lib/extendFeed.js'
-import { redirect } from '@sveltejs/kit'
 
 async function getAccount(id: string, options: { fetch: FetchFunction }) {
 	const { fetch } = options
@@ -14,7 +13,7 @@ async function getAccountFeed(id: string, options: { fetch: FetchFunction }) {
 	return await extendFeed(feed, { fetch, pages: 1 })
 }
 
-export async function load({ fetch, params, cookies }) {
+export async function load({ fetch, params }) {
 	const id = params.id
 	const [accountData, accountVideos] = await Promise.all([
 		await getAccount(id, { fetch }),

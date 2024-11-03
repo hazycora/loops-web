@@ -1,5 +1,4 @@
 import extendFeed from '$lib/extendFeed.js'
-import { redirect } from '@sveltejs/kit'
 
 async function loadVideoWithContext(
 	id: string,
@@ -27,7 +26,7 @@ async function loadVideoWithContext(
 	}
 }
 
-export async function load({ fetch, params, cookies }) {
+export async function load({ fetch, params }) {
 	const id = params.id
 	return await loadVideoWithContext(id, { fetch })
 }
