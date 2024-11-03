@@ -28,7 +28,7 @@
 	</label>
 	<label>
 		Avatar
-		<input type="file" name="avatar" id="" />
+		<input accept="image/*" type="file" name="avatar" id="" />
 	</label>
 	<button type="submit">Save</button>
 </form>
