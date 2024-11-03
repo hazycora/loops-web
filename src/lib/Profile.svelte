@@ -26,7 +26,7 @@
 		</a>
 		<a href="/user/{account.id}/following">
 			<dl>
-				<dd>{account.follower_count}</dd>
+				<dd>{account.following_count}</dd>
 				<dt>Following</dt>
 			</dl>
 		</a>
