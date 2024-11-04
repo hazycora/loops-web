@@ -1,12 +1,18 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
-	import { PaperPlaneTilt } from 'phosphor-svelte'
+	import {
+		Heart,
+		ShareFat,
+		DownloadSimple,
+		PaperPlaneTilt
+	} from 'phosphor-svelte'
 	import IconButton from './IconButton.svelte'
 	import Comment from './Comment.svelte'
 	import LoadingSpinner from './LoadingSpinner.svelte'
 	import type { Paginated, Video, Comment as CommentType } from '$lib/types'
 	export let video: Video
 	import { page } from '$app/stores'
+	import { downloadVideo, likeVideo, shareVideo } from '$lib/videoActions'
 
 	let comments: Promise<Paginated<CommentType> | undefined>
 	let addedComments: CommentType[] = []
@@ -55,6 +61,32 @@
 			</div>
 		</a>
 	</div>
+	<div class="actions">
+		<IconButton
+			disabled={!$page.data.self}
+			on:click={() => likeVideo(video)}
+			size="2rem"
+			weight="regular"
+			icon={Heart}
+			label="like"
+			filled={video.has_liked}
+		/>
+		<IconButton
+			disabled={!$page.data.self}
+			on:click={() => shareVideo(video)}
+			size="2rem"
+			weight="regular"
+			icon={ShareFat}
+			label="share"
+		/>
+		<IconButton
+			on:click={() => downloadVideo(video)}
+			size="2rem"
+			weight="regular"
+			icon={DownloadSimple}
+			label="Download"
+		/>
+	</div>
 	{#await comments}
 		<LoadingSpinner />
 	{:then comments}
@@ -88,11 +120,10 @@
 <style lang="postcss">
 	.details {
 		display: grid;
-		grid-template-rows: min-content 1fr;
+		grid-template-rows: min-content min-content 1fr;
 		background: rgb(255 255 255 / 0.1);
 	}
 	.video-info {
-		border-block-end: 1px solid rgb(255 255 255 / 0.2);
 		padding: 0.5rem;
 		.caption {
 			margin-block: 0;
@@ -125,6 +156,11 @@
 				height: 2rem;
 			}
 		}
+	}
+	.actions {
+		display: flex;
+		justify-content: space-around;
+		border-block-end: 1px solid rgb(255 255 255 / 0.2);
 	}
 	.comments {
 		margin: 0;

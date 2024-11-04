@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { DownloadSimple, Play } from 'phosphor-svelte'
+	import { Heart, DownloadSimple, Play } from 'phosphor-svelte'
 	import IconButton from './IconButton.svelte'
-	// import { page } from '$app/stores'
+	import { page } from '$app/stores'
 	import type { Video } from '$lib/types'
+	import { mobile } from '$lib/stores'
+	import { downloadVideo, likeVideo } from '$lib/videoActions'
 
 	export let video: Video
 	export let active = false
@@ -26,31 +28,6 @@
 
 	function pauseVideo() {
 		videoElement.pause()
-	}
-
-	// function likeVideo() {
-	// 	if (!$page.data.self) return
-	// }
-
-	function downloadVideo() {
-		const iosUser = /iPhone|iPad|iPod/i.test(navigator.userAgent)
-
-		const filename = <string>video.media.src_url.split('/').pop()
-
-		if (iosUser) {
-			fetch(video.media.src_url)
-				.then(response => response.blob())
-				.then(blob => {
-					const files = [new File([blob], filename, { type: 'video/mp4' })]
-					navigator.share({ files })
-				})
-			return
-		}
-
-		const a = document.createElement('a')
-		a.href = video.media.src_url
-		a.download = filename
-		a.click()
 	}
 </script>
 
@@ -83,25 +60,29 @@
 				<p class="caption">{video.caption}</p>
 			{/if}
 		</div>
-		<div class="actions">
-			<a href="/user/{video.account.id}">
-				<img src={video.account.avatar} alt="" class="avatar" />
-			</a>
-			<!-- <IconButton
-				disabled={!$page.data.self}
-				on:click={likeVideo}
-				size="2rem"
-				icon={Heart}
-				label="like"
-			/> -->
-			<IconButton
-				on:click={downloadVideo}
-				size="3rem"
-				weight="regular"
-				icon={DownloadSimple}
-				label="Download"
-			/>
-		</div>
+		{#if $mobile}
+			<div class="actions">
+				<a href="/user/{video.account.id}">
+					<img src={video.account.avatar} alt="" class="avatar" />
+				</a>
+				<IconButton
+					disabled={!$page.data.self}
+					on:click={() => likeVideo(video)}
+					size="3rem"
+					weight="regular"
+					icon={Heart}
+					label="like"
+					filled={video.has_liked}
+				/>
+				<IconButton
+					on:click={() => downloadVideo(video)}
+					size="3rem"
+					weight="regular"
+					icon={DownloadSimple}
+					label="Download"
+				/>
+			</div>
+		{/if}
 	</div>
 </div>
 
