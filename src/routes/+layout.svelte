@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.pcss'
 	import type { Account, Video } from '$lib/types'
-	import { House, User } from 'phosphor-svelte'
+	import { House, UploadSimple, User } from 'phosphor-svelte'
 	import { page } from '$app/stores'
 
 	import { onMount, setContext } from 'svelte'
@@ -65,6 +65,10 @@
 				<a href="/feed" class:active={$page.url.pathname == '/feed'}>
 					<House size="2rem" />
 					<span class="label">Feed</span>
+				</a>
+				<a href="/upload" class:active={$page.url.pathname == '/upload'}>
+					<UploadSimple size="2rem" />
+					<span class="label">Upload</span>
 				</a>
 				<a
 					href="/user/{self.id}"
