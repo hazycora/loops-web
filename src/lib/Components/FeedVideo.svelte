@@ -84,6 +84,9 @@
 			{/if}
 		</div>
 		<div class="actions">
+			<a href="/user/{video.account.id}">
+				<img src={video.account.avatar} alt="" class="avatar" />
+			</a>
 			<!-- <IconButton
 				disabled={!$page.data.self}
 				on:click={likeVideo}
@@ -93,7 +96,8 @@
 			/> -->
 			<IconButton
 				on:click={downloadVideo}
-				size="2rem"
+				size="3rem"
+				weight="regular"
 				icon={DownloadSimple}
 				label="Download"
 			/>
@@ -176,7 +180,13 @@
 		justify-content: flex-end;
 		align-items: center;
 		gap: 0.5rem;
-		padding-block: 1rem;
+		padding-block: 0.5rem;
 		padding-inline: 1rem;
+		> * {
+			width: 2.75rem;
+		}
+		.avatar {
+			border-radius: 100%;
+		}
 	}
 </style>

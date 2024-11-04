@@ -5,6 +5,7 @@
 	export let size = '1.25rem'
 	export let icon: ComponentType
 	export let type: 'submit' | null = null
+	export let weight = 'bold'
 	export let filled = false
 	export let showLabel = false
 	export let disabled = false
@@ -13,7 +14,7 @@
 <label class:disabled>
 	<span class="label" class:sr-only={!showLabel}>{label}</span>
 	<button {disabled} {type} on:click class="button">
-		<svelte:component this={icon} weight={filled ? 'fill' : 'bold'} {size} />
+		<svelte:component this={icon} weight={filled ? 'fill' : weight} {size} />
 	</button>
 </label>
 
