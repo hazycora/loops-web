@@ -18,7 +18,7 @@
 <style lang="postcss">
 	.videos {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, 8rem);
+		grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
 		gap: 0.5rem;
 	}
 
