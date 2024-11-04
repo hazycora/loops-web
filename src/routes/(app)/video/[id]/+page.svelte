@@ -1,5 +1,6 @@
 <script lang="ts">
 	import FeedComponent from '$lib/Components/Feed.svelte'
+	import MetaTags from '$lib/Components/MetaTags.svelte'
 	import type { Feed, Video } from '$lib/types'
 
 	export let data: {
@@ -12,6 +13,14 @@
 
 	// TODO: update URL when activeVideo changes
 </script>
+
+<MetaTags
+	value={{
+		title: `${data.video.caption} on Loops`,
+		description: `View ${data.video.account.name}'s videos`,
+		video: data.video.media.src_url
+	}}
+/>
 
 <FeedComponent
 	bind:activeVideo

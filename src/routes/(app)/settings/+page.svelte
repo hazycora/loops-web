@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores'
+	import MetaTags from '$lib/Components/MetaTags.svelte'
 	import type { Account } from '$lib/types'
 	$: self = <Account>$page.data.self
 
@@ -43,6 +44,13 @@
 		<button type="submit">Logout</button>
 	</form>
 </div>
+
+<MetaTags
+	value={{
+		title: 'Profile settings - Loops',
+		description: 'Update your profile on Loops'
+	}}
+/>
 
 <style lang="postcss">
 	h1 {

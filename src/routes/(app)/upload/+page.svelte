@@ -1,9 +1,17 @@
 <script lang="ts">
+	import MetaTags from '$lib/Components/MetaTags.svelte'
 	import type { Video } from '$lib/types'
 
 	export let form: { success: boolean; message?: string; video: Video } | null =
 		null
 </script>
+
+<MetaTags
+	value={{
+		title: 'Upload - Loops',
+		description: 'Share your videos on Loops'
+	}}
+/>
 
 <form enctype="multipart/form-data" method="post">
 	<h1>Upload</h1>

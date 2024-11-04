@@ -1,3 +1,15 @@
+<script lang="ts">
+	import MetaTags from '$lib/Components/MetaTags.svelte'
+</script>
+
+<MetaTags
+	value={{
+		title: 'Loops',
+		description:
+			'Discover and share videos on Loops by Pixelfed - an open-source short-form video platform.'
+	}}
+/>
+
 <div class="page">
 	<form method="post">
 		<p>An unofficial client for <a href="https://loops.videos">Loops</a></p>
