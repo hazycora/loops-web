@@ -25,6 +25,5 @@
 	{/if}
 	{#if value.video}
 		<meta property="og:video" content={value.video} />
-		<meta property="twitter:player:stream" content={value.video} />
 	{/if}
 </svelte:head>
