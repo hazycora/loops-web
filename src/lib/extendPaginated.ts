@@ -10,17 +10,18 @@ export default async function extendPaginated<T>(
 ) {
 	const pages = options.pages || 1
 	const fetch = options.fetch || globalThis.fetch
-	if (feed.links.next) {
-		for (let i = 0; i < pages; i++) {
-			const pageResponse = await fetch(proxyApiUrl(feed.links.next))
-			if (!pageResponse.ok) {
-				break
-			}
-			const page = <Paginated<T>>await pageResponse.json()
-			feed.data.push(...page.data)
-			feed.links.next = page.links.next
-			feed.meta.next_cursor = page.meta.next_cursor
+	for (let i = 0; i < pages; i++) {
+		if (!feed.links.next) {
+			break
 		}
+		const pageResponse = await fetch(proxyApiUrl(feed.links.next))
+		if (!pageResponse.ok) {
+			break
+		}
+		const page = <Paginated<T>>await pageResponse.json()
+		feed.data.push(...page.data)
+		feed.links.next = page.links.next
+		feed.meta.next_cursor = page.meta.next_cursor
 	}
 	return feed
 }
