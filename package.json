@@ -10,7 +10,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"preinstall": "npx only-allow pnpm"
+		"start": "node -r dotenv/config build"
 	},
 	"devDependencies": {
 		"@besties/eslint-config": "0.2.5",
@@ -39,6 +39,7 @@
 	"license": "OQL-1.1",
 	"packageManager": "pnpm@9.12.2+sha512.22721b3a11f81661ae1ec68ce1a7b879425a1ca5b991c975b074ac220b187ce56c708fe5db69f4c962c989452eee76c82877f4ee80f474cebd61ee13461b6228",
 	"dependencies": {
+		"dotenv": "^16.4.5",
 		"phosphor-svelte": "^2.0.1"
 	}
 }
