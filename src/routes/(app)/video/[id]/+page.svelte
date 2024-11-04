@@ -16,7 +16,7 @@
 
 <MetaTags
 	value={{
-		title: `${data.video.caption} on Loops`,
+		title: `${data.video.caption} by @${data.video.account.username} on Loops`,
 		description: `View ${data.video.account.name}'s videos`,
 		video: data.video.media.src_url
 	}}
