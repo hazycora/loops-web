@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Heart, Play } from 'phosphor-svelte'
+	import { DownloadSimple, Play } from 'phosphor-svelte'
 	import IconButton from './IconButton.svelte'
+	// import { page } from '$app/stores'
+	import type { Video } from '$lib/types'
 
-	export let video
+	export let video: Video
 	export let active = false
 
 	let videoElement: HTMLVideoElement
@@ -24,6 +26,31 @@
 
 	function pauseVideo() {
 		videoElement.pause()
+	}
+
+	// function likeVideo() {
+	// 	if (!$page.data.self) return
+	// }
+
+	function downloadVideo() {
+		const iosUser = /iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+		const filename = <string>video.media.src_url.split('/').pop()
+
+		if (iosUser) {
+			fetch(video.media.src_url)
+				.then(response => response.blob())
+				.then(blob => {
+					const files = [new File([blob], filename, { type: 'video/mp4' })]
+					navigator.share({ files })
+				})
+			return
+		}
+
+		const a = document.createElement('a')
+		a.href = video.media.src_url
+		a.download = filename
+		a.click()
 	}
 </script>
 
@@ -57,7 +84,19 @@
 			{/if}
 		</div>
 		<div class="actions">
-			<IconButton icon={Heart} label="Like video" />
+			<!-- <IconButton
+				disabled={!$page.data.self}
+				on:click={likeVideo}
+				size="2rem"
+				icon={Heart}
+				label="like"
+			/> -->
+			<IconButton
+				on:click={downloadVideo}
+				size="2rem"
+				icon={DownloadSimple}
+				label="Download"
+			/>
 		</div>
 	</div>
 </div>
@@ -78,27 +117,22 @@
 			overflow: hidden;
 		}
 	}
-	.details {
+
+	.interface {
+		pointer-events: none;
+		> * {
+			pointer-events: auto;
+		}
 		z-index: 900;
+		display: grid;
+		grid-template-columns: 1fr 4rem;
+	}
+	.details {
 		position: relative;
 		isolation: isolate;
-		padding: 0.5rem;
+		padding: 1rem 0.5rem;
 		filter: drop-shadow(0 0 0.5rem rgb(0 0 0 / 0.75))
 			drop-shadow(0 0 0.125rem rgb(0 0 0 / 0.5));
-		&::before {
-			display: block;
-			position: absolute;
-			inset-block: 0;
-			inset-block-start: -1rem;
-			inset-inline: 0;
-			content: '';
-			z-index: -1;
-			background-image: linear-gradient(
-				to bottom,
-				transparent,
-				rgb(0 0 0 / 0.025) 1rem
-			);
-		}
 		height: min-content;
 		align-self: end;
 	}
@@ -133,5 +167,16 @@
 		&.visible {
 			background-color: rgb(0 0 0 / 0.5);
 		}
+	}
+	.actions {
+		align-self: end;
+		height: min-content;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 0.5rem;
+		padding-block: 1rem;
+		padding-inline: 1rem;
 	}
 </style>

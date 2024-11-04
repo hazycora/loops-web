@@ -2,18 +2,35 @@
 	import type { ComponentType } from 'svelte'
 
 	export let label: string
+	export let size = '1.25rem'
 	export let icon: ComponentType
 	export let type: 'submit' | null = null
+	export let filled = false
+	export let showLabel = false
+	export let disabled = false
 </script>
 
-<label>
-	<span class="sr-only">{label}</span>
-	<button {type} on:click class="button">
-		<svelte:component this={icon} weight="bold" size="1.25rem" />
+<label class:disabled>
+	<span class="label" class:sr-only={!showLabel}>{label}</span>
+	<button {disabled} {type} on:click class="button">
+		<svelte:component this={icon} weight={filled ? 'fill' : 'bold'} {size} />
 	</button>
 </label>
 
 <style lang="postcss">
+	label {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+		.label {
+			text-transform: capitalize;
+			font-weight: 500;
+		}
+		&.disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
 	.button {
 		background: none;
 		border: none;
