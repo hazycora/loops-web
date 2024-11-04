@@ -10,6 +10,7 @@
 	import { fade, fly } from 'svelte/transition'
 	import { cubicOut } from 'svelte/easing'
 	import Button from '$lib/Components/Button.svelte'
+	import { onNavigate } from '$app/navigation'
 
 	const videoPanel = writable<Video | undefined>(undefined)
 	setContext('videoPanel', videoPanel)
@@ -30,6 +31,10 @@
 			videoPanel.set(undefined)
 		}
 	}
+
+	onNavigate(() => {
+		videoPanel.set(undefined)
+	})
 
 	onMount(() => {
 		window.addEventListener('keydown', onPanelKeydown)
