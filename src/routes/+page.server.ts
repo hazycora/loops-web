@@ -1,4 +1,7 @@
 import { error, redirect } from '@sveltejs/kit'
+import { env } from '$env/dynamic/private'
+
+const ALLOW_HTTP = env.ALLOW_HTTP
 
 export async function load({ cookies }) {
 	const token = cookies.get('token')
@@ -37,7 +40,8 @@ export const actions = {
 		const tokenData = <{ auth_token: string }>await authResponse.json()
 		cookies.set('token', tokenData.auth_token, {
 			path: '/',
-			maxAge: 60 * 60 * 24 * 30
+			maxAge: 60 * 60 * 24 * 30,
+			secure: !ALLOW_HTTP
 		})
 
 		redirect(303, '/feed')
