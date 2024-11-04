@@ -54,16 +54,18 @@
 	{#if account.bio}
 		<p class="bio">{account.bio}</p>
 	{/if}
-	<div class="actions">
-		{#if self && self.id == account.id}
-			<Button href="/upload" icon={VideoCamera} text="Upload" />
-			<Button href="/settings" icon={GearFine} text="Settings" />
-		{:else if !followState.following}
-			<Button on:click={followAccount} icon={UserPlus} text="Follow" />
-		{:else}
-			<Button on:click={unfollowAccount} icon={UserPlus} text="Unfollow" />
-		{/if}
-	</div>
+	{#if self}
+		<div class="actions">
+			{#if self.id == account.id}
+				<Button href="/upload" icon={VideoCamera} text="Upload" />
+				<Button href="/settings" icon={GearFine} text="Settings" />
+			{:else if !followState.following}
+				<Button on:click={followAccount} icon={UserPlus} text="Follow" />
+			{:else}
+				<Button on:click={unfollowAccount} icon={UserPlus} text="Unfollow" />
+			{/if}
+		</div>
+	{/if}
 </div>
 
 <style lang="postcss">
