@@ -16,7 +16,6 @@
 			body: JSON.stringify({})
 		})
 		followState = await followResponse.json()
-		console.log(followState)
 	}
 
 	async function unfollowAccount() {
@@ -26,7 +25,6 @@
 			body: JSON.stringify({})
 		})
 		followState = await followResponse.json()
-		console.log(followState)
 	}
 </script>
 
