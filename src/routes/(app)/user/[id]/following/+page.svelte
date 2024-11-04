@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AccountList from '$lib/AccountList.svelte'
+	import AccountList from '$lib/Components/AccountList.svelte'
 
 	export let data
 </script>

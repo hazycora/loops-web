@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores'
+	import type { Account } from '$lib/types'
 	$: self = <Account>$page.data.self
 
 	export let form: { success: boolean; message?: string } | null = null

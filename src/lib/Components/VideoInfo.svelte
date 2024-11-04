@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
-	import PaperPlaneTilt from 'phosphor-svelte/lib/PaperPlaneTilt'
+	import { PaperPlaneTilt } from 'phosphor-svelte'
 	import IconButton from './IconButton.svelte'
-	import CommentComponent from './Comment.svelte'
+	import Comment from './Comment.svelte'
 	import LoadingSpinner from './LoadingSpinner.svelte'
+	import type { Paginated, Video, Comment as CommentType } from '$lib/types'
 	export let video: Video
 
-	let comments: Promise<Paginated<Comment> | undefined>
-	let addedComments: Comment[] = []
+	let comments: Promise<Paginated<CommentType> | undefined>
+	let addedComments: CommentType[] = []
 
 	$: {
 		comments = fetchComments(video.id)
@@ -19,7 +20,7 @@
 		if (!browser) return
 		addedComments = []
 		const commentsResponse = await fetch(`/api/v0/comments/id/${id}`)
-		return <Paginated<Comment>>await commentsResponse.json()
+		return <Paginated<CommentType>>await commentsResponse.json()
 	}
 
 	async function addComment() {
@@ -60,11 +61,11 @@
 			<ul class="comments">
 				{#each addedComments as comment}
 					<li>
-						<CommentComponent videoId={video.id} {comment} />
+						<Comment videoId={video.id} {comment} />
 					</li>
 				{/each}
 				{#each comments.data as comment}
-					<CommentComponent videoId={video.id} {comment} />
+					<Comment videoId={video.id} {comment} />
 				{/each}
 			</ul>
 		{:else}

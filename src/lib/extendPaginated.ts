@@ -1,9 +1,10 @@
 import { proxyApiUrl } from './proxyApiUrl'
+import type { Paginated } from './types'
 
 export default async function extendPaginated<T>(
 	feed: Paginated<T>,
 	options: {
-		fetch?: FetchFunction
+		fetch?: typeof fetch
 		pages?: number
 	} = { pages: 1 }
 ) {

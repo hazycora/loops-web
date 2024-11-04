@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Account, Paginated } from '$lib/types'
 	import ProfileItem from './ProfileItem.svelte'
 
 	export let accounts: Paginated<Account>

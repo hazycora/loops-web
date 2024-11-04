@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Feed } from '$lib/types'
+
 	export let feed: Feed
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Feed from '$lib/Feed.svelte'
+	import Feed from '$lib/Components/Feed.svelte'
 
 	export let data
 </script>

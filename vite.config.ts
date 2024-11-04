@@ -21,5 +21,8 @@ export default defineConfig({
 			requireSuffix: true
 		}),
 		sveltekit()
-	]
+	],
+	optimizeDeps: {
+		exclude: ['phosphor-svelte']
+	}
 })

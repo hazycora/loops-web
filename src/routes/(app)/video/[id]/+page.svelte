@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { goto, pushState } from '$app/navigation'
-	import { page } from '$app/stores'
-	import FeedComponent from '$lib/Feed.svelte'
+	import FeedComponent from '$lib/Components/Feed.svelte'
+	import type { Feed, Video } from '$lib/types'
 
 	export let data: {
 		video: Video

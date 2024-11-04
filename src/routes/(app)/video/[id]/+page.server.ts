@@ -1,8 +1,9 @@
 import extendPaginated from '$lib/extendPaginated.js'
+import type { Feed, Video } from '$lib/types'
 
 async function loadVideoWithContext(
 	id: string,
-	options: { fetch: FetchFunction }
+	options: { fetch: typeof fetch }
 ) {
 	const fetch = options.fetch
 	const videoResponse = await fetch(`/api/v0/video/id/${id}`)

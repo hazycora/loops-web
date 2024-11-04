@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Video } from '$lib/types'
+
 	export let form: { success: boolean; message?: string; video: Video } | null =
 		null
 </script>

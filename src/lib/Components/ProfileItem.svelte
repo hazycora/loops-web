@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Account } from '$lib/types'
+
 	export let account: Account
 </script>
 

@@ -1,8 +1,9 @@
 import extendPaginated from '$lib/extendPaginated'
+import type { Account, Paginated } from '$lib/types'
 
 async function getAccountFollowers(
 	id: string,
-	options: { fetch: FetchFunction }
+	options: { fetch: typeof fetch }
 ) {
 	const { fetch } = options
 	const userFollowersResponse = await fetch(`/api/v0/user/followers/byId/${id}`)

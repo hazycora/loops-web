@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import GearFine from 'phosphor-svelte/lib/GearFine'
-	import UserPlus from 'phosphor-svelte/lib/UserPlus'
-	import VideoCamera from 'phosphor-svelte/lib/VideoCamera'
+	import { GearFine, UserPlus, VideoCamera } from 'phosphor-svelte'
 	import Button from './Button.svelte'
+	import type { Account, FollowState } from '$lib/types'
 	export let account: Account
 	export let followState: FollowState
 

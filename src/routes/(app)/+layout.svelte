@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Account } from '$lib/types'
+
 	export let data: { self?: Account }
 </script>
 

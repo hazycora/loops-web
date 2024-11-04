@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import FeedVideo from './FeedVideo.svelte'
-	import extendPaginated from './extendPaginated'
+	import extendPaginated from '$lib/extendPaginated'
 
-	import { mobile } from './stores'
+	import { mobile } from '$lib/stores'
 	import VideoInfo from './VideoInfo.svelte'
+	import type { Feed, Video } from '$lib/types'
 
 	export let feed: Feed
 	export let startIndex = 0

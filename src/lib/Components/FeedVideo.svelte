@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Play from 'phosphor-svelte/lib/Play'
+	import { Heart, Play } from 'phosphor-svelte'
+	import IconButton from './IconButton.svelte'
 
 	export let video
 	export let active = false
@@ -45,14 +46,19 @@
 	{:else}
 		<button class="play-button" on:click={pauseVideo}></button>
 	{/if}
-	<div class="details">
-		<a href="/user/{video.account.id}" class="author">
-			<img src={video.account.avatar} alt="" class="avatar" />
-			<span>@{video.account.username}</span>
-		</a>
-		{#if video.caption}
-			<p class="caption">{video.caption}</p>
-		{/if}
+	<div class="interface">
+		<div class="details">
+			<a href="/user/{video.account.id}" class="author">
+				<img src={video.account.avatar} alt="" class="avatar" />
+				<span>@{video.account.username}</span>
+			</a>
+			{#if video.caption}
+				<p class="caption">{video.caption}</p>
+			{/if}
+		</div>
+		<div class="actions">
+			<IconButton icon={Heart} label="Like video" />
+		</div>
 	</div>
 </div>
 

@@ -2,6 +2,7 @@
 	import { page } from '$app/stores'
 	import Trash from 'phosphor-svelte/lib/Trash'
 	import IconButton from './IconButton.svelte'
+	import type { Account, Comment } from '$lib/types'
 
 	export let comment: Comment
 	export let videoId: string

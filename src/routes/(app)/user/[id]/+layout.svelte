@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Profile from '$lib/Profile.svelte'
+	import Profile from '$lib/Components/Profile.svelte'
 
 	export let data
 </script>
