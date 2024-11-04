@@ -1,26 +1,21 @@
 <script lang="ts">
 	import type { ComponentType } from 'svelte'
 
-	export let text: string
-	export let href: string | null = null
+	export let label: string
 	export let icon: ComponentType
 	export let type: 'submit' | null = null
 </script>
 
-{#if href}
-	<a {href} class="button">
-		<svelte:component this={icon} weight="bold" size="1.125rem" />
-		{text}
-	</a>
-{:else}
+<label>
+	<span class="sr-only">{label}</span>
 	<button {type} on:click class="button">
-		<svelte:component this={icon} weight="bold" size="1.125rem" />
-		{text}
+		<svelte:component this={icon} weight="bold" size="1.25rem" />
 	</button>
-{/if}
+</label>
 
 <style lang="postcss">
 	.button {
+		background: none;
 		border: none;
 		cursor: pointer;
 		text-decoration: none;
@@ -28,10 +23,9 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		padding: 0.25rem 0.375rem;
+		padding: 0.5rem;
 		font-weight: 500;
 		border-radius: 0.25rem;
-		background-color: var(--button-bg-clr);
 		width: fit-content;
 	}
 </style>

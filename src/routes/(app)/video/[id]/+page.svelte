@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto, pushState } from '$app/navigation'
+	import { page } from '$app/stores'
 	import FeedComponent from '$lib/Feed.svelte'
 
 	export let data: {
@@ -6,6 +8,14 @@
 		accountFeed: Feed
 		accountFeedIndex: number
 	}
+
+	let activeVideo: Video | null = null
+
+	// TODO: update URL when activeVideo changes
 </script>
 
-<FeedComponent feed={data.accountFeed} startIndex={data.accountFeedIndex} />
+<FeedComponent
+	bind:activeVideo
+	feed={data.accountFeed}
+	startIndex={data.accountFeedIndex}
+/>
