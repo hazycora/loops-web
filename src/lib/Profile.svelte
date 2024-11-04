@@ -2,6 +2,7 @@
 	import { page } from '$app/stores'
 	import GearFine from 'phosphor-svelte/lib/GearFine'
 	import UserPlus from 'phosphor-svelte/lib/UserPlus'
+	import VideoCamera from 'phosphor-svelte/lib/VideoCamera'
 	import Button from './Button.svelte'
 	export let account: Account
 	export let followState: FollowState
@@ -58,6 +59,7 @@
 	{/if}
 	<div class="actions">
 		{#if self && self.id == account.id}
+			<Button href="/upload" icon={VideoCamera} text="Upload" />
 			<Button href="/settings" icon={GearFine} text="Settings" />
 		{:else if !followState.following}
 			<Button on:click={followAccount} icon={UserPlus} text="Follow" />
@@ -127,6 +129,9 @@
 	}
 
 	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
 		margin-block-start: 0.75rem;
 	}
 </style>
