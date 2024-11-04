@@ -27,14 +27,8 @@
 	{#if value.video}
 		<meta property="og:video" content={value.video.media.src_url} />
 		<meta property="og:video:secure_url" content={value.video.media.src_url} />
-		<meta
-			property="og:video:height"
-			content={value.video.media.height.toString()}
-		/>
-		<meta
-			property="og:video:width"
-			content={value.video.media.width.toString()}
-		/>
+		<meta property="og:video:height" content="1280" />
+		<meta property="og:video:width" content="720" />
 		<meta property="og:video:type" content="video/mp4" />
 	{:else}
 		<meta property="twitter:card" content="summary" />
