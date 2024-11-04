@@ -1,8 +1,11 @@
 <script lang="ts">
+	import Play from 'phosphor-svelte/lib/Play'
+
 	export let video
 	export let active = false
 
 	let videoElement: HTMLVideoElement
+	let paused: boolean
 
 	$: {
 		if (videoElement) {
@@ -13,12 +16,21 @@
 			}
 		}
 	}
+
+	function playVideo() {
+		videoElement.play()
+	}
+
+	function pauseVideo() {
+		videoElement.pause()
+	}
 </script>
 
 <div class="video">
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
 		bind:this={videoElement}
+		bind:paused
 		poster={video.media.thumbnail}
 		autoplay={active}
 		loop
@@ -26,6 +38,13 @@
 	>
 		<source src={video.media.src_url} />
 	</video>
+	{#if paused || paused === undefined}
+		<button class="play-button visible" on:click={playVideo}>
+			<Play weight="fill" size="4rem" />
+		</button>
+	{:else}
+		<button class="play-button" on:click={pauseVideo}></button>
+	{/if}
 	<div class="details">
 		<a href="/user/{video.account.id}" class="author">
 			<img src={video.account.avatar} alt="" class="avatar" />
@@ -54,6 +73,7 @@
 		}
 	}
 	.details {
+		z-index: 900;
 		position: relative;
 		isolation: isolate;
 		padding: 0.5rem;
@@ -98,5 +118,13 @@
 	.caption {
 		margin-block: 0;
 		margin-block-start: 0.5rem;
+	}
+	.play-button {
+		background: none;
+		border: none;
+		z-index: 100;
+		&.visible {
+			background-color: rgb(0 0 0 / 0.5);
+		}
 	}
 </style>

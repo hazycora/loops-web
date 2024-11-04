@@ -9,11 +9,8 @@ async function getSelf(options: { fetch: FetchFunction }) {
 async function updateSelf(options: { fetch: FetchFunction }) {
 	const selfData = await getSelf(options)
 	const timestamp = new Date().getTime()
-	const self = JSON.stringify({
-		data: selfData,
-		timestamp
-	})
-	sessionStorage.setItem('self', self)
+	sessionStorage.setItem('selfObject', JSON.stringify(selfData))
+	sessionStorage.setItem('selfTimestamp', timestamp.toString())
 	return self
 }
 
@@ -21,19 +18,13 @@ export async function load({ fetch }) {
 	if (!browser) {
 		return { self: await getSelf({ fetch }) }
 	}
-	let selfJson = sessionStorage.getItem('self')
-	if (!selfJson) {
-		updateSelf({ fetch })
-	} else {
-		const { timestamp } = JSON.parse(selfJson)
-		const now = new Date().getTime()
-		const delta = now - timestamp
-		if (delta > 1000 * 60 * 5) {
-			selfJson = await updateSelf({ fetch })
-		}
+	const now = new Date().getTime()
+	const selfTimestamp = parseInt(sessionStorage.getItem('selfTimestamp') || '0')
+	const delta = now - selfTimestamp
+
+	if (delta > 1000 * 60) {
+		await updateSelf({ fetch })
 	}
-	const self = <{ data: Account; timestamp: number }>(
-		JSON.parse(<string>selfJson)
-	)
-	return { self: self.data }
+	const self = <Account>JSON.parse(<string>sessionStorage.getItem('selfObject'))
+	return { self }
 }

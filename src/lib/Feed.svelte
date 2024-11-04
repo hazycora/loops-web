@@ -28,7 +28,7 @@
 	function onScroll(event: Event) {
 		if (!event.target) return
 		const target = event.target as HTMLElement
-		activeIndex = Math.ceil(target.scrollTop / clientHeight)
+		activeIndex = Math.round(target.scrollTop / clientHeight)
 
 		if (feed.data.length - 1 <= activeIndex) {
 			loadMore()

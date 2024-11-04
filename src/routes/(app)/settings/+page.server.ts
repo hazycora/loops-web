@@ -1,5 +1,7 @@
+import { redirect } from '@sveltejs/kit'
+
 export const actions = {
-	default: async ({ fetch, request }) => {
+	updateprofile: async ({ fetch, request }) => {
 		const form = await request.formData()
 		const body = {
 			name: form.get('name'),
@@ -35,5 +37,9 @@ export const actions = {
 		return {
 			success: updateBioResponse.ok
 		}
+	},
+	logout: async ({ cookies }) => {
+		cookies.delete('token', { path: '/' })
+		redirect(303, '/')
 	}
 }
