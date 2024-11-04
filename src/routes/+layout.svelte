@@ -189,6 +189,9 @@
 		}
 		main {
 			padding: 0.25rem 0.5rem;
+			padding-block-start: calc(env(safe-area-inset-top) + 0.25rem);
+			padding-block-left: calc(env(safe-area-inset-left) + 0.5rem);
+			padding-block-right: calc(env(safe-area-inset-right) + 0.5rem);
 			overflow: hidden;
 			overflow-y: auto;
 		}
