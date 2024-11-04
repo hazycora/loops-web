@@ -126,13 +126,13 @@
 		z-index: 900;
 		display: grid;
 		grid-template-columns: 1fr 4rem;
+		filter: drop-shadow(0 0 0.5rem rgb(0 0 0 / 0.75))
+			drop-shadow(0 0 0.125rem rgb(0 0 0 / 0.5));
 	}
 	.details {
 		position: relative;
 		isolation: isolate;
 		padding: 1rem 0.5rem;
-		filter: drop-shadow(0 0 0.5rem rgb(0 0 0 / 0.75))
-			drop-shadow(0 0 0.125rem rgb(0 0 0 / 0.5));
 		height: min-content;
 		align-self: end;
 	}
