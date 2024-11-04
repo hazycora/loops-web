@@ -168,6 +168,8 @@
 		}
 		.avatar {
 			border-radius: 100%;
+			width: 2.75rem;
+			height: 2.75rem;
 		}
 	}
 </style>

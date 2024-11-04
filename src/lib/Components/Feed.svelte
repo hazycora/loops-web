@@ -62,23 +62,24 @@
 <style lang="postcss">
 	.player-wrapper {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		aspect-ratio: 18 / 16;
-		@media (max-width: 40rem) {
-			grid-template-columns: 1fr;
-			aspect-ratio: 9 / 16;
+		@media not (max-width: 40rem) {
+			grid-template-columns: 1fr 1fr;
+			aspect-ratio: 18 / 16;
+			border-radius: 0.5rem;
 		}
 		max-width: 100%;
 		max-height: 100%;
-		border-radius: 0.5rem;
 		overflow: hidden;
 		margin-inline: auto;
 		align-self: center;
 	}
 	.feed {
-		aspect-ratio: 9 / 16;
+		@media not (max-width: 40rem) {
+			aspect-ratio: 9 / 16;
+		}
 		width: 100%;
 		min-width: 0;
+		min-height: 0;
 
 		overflow-y: auto;
 		overflow-x: hidden;

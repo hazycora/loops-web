@@ -1,12 +1,16 @@
 <script lang="ts">
 	import '../app.pcss'
 	import type { Account } from '$lib/types'
+	import { House, User } from 'phosphor-svelte'
+	import { page } from '$app/stores'
 
 	export let data: { self?: Account }
+
+	$: isFeed = $page.route.id == '/(app)/feed'
 </script>
 
 <div class="app">
-	<nav>
+	<nav class="desktop">
 		<a class="wordmark" href="/">Loops</a>
 		{#if data.self}
 			<a href="/user/{data.self.id}" class="me">
@@ -15,7 +19,30 @@
 		{/if}
 	</nav>
 	<div class="content">
-		<slot />
+		{#if isFeed}
+			<slot />
+		{:else}
+			<main>
+				<slot />
+			</main>
+		{/if}
+		{#if $page.data.self}
+			<nav class="mobile">
+				<a href="/feed" class:active={$page.url.pathname == '/feed'}>
+					<House size="2rem" />
+					<span class="label">Feed</span>
+				</a>
+				<a
+					href="/user/{$page.data.self.id}"
+					class:active={$page.url.pathname.startsWith(
+						`/user/${$page.data.self.id}`
+					)}
+				>
+					<User size="2rem" />
+					<span class="label">Profile</span>
+				</a>
+			</nav>
+		{/if}
 	</div>
 </div>
 
@@ -28,7 +55,7 @@
 		max-width: 80rem;
 		margin-inline: auto;
 	}
-	nav {
+	nav.desktop {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -52,5 +79,44 @@
 		padding: 0.25rem 0.5rem;
 		overflow: hidden;
 		overflow-y: auto;
+	}
+
+	nav.mobile {
+		padding: 0.25rem;
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		a {
+			width: 100%;
+			color: inherit;
+			text-decoration: none;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			.label {
+				font-size: 0.75rem;
+			}
+		}
+		.active {
+			color: var(--primary-clr);
+		}
+	}
+
+	@media (max-width: 40rem) {
+		nav.desktop {
+			display: none;
+		}
+		.content {
+			padding: 0;
+			grid-template-rows: 1fr auto;
+			height: 100%;
+			height: 100vh;
+			height: 100svh;
+		}
+		main {
+			padding: 0.25rem 0.5rem;
+			overflow: hidden;
+			overflow-y: auto;
+		}
 	}
 </style>
