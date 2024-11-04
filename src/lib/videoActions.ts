@@ -33,13 +33,20 @@ export function shareVideo(video: Video) {
 	}
 }
 
-export async function likeVideo(video: Video) {
-	video.has_liked = true
-	const likeResponse = await fetch(`/api/v0/like/video/${video.id}`, {
+export async function toggleLikeVideo(video: Video) {
+	const newState = !video.has_liked
+	video.has_liked = newState
+	const likeUrl = newState
+		? `/api/v0/like/video/${video.id}`
+		: `/api/v0/unlike/video/${video.id}`
+	const likeResponse = await fetch(likeUrl, {
 		method: 'POST'
 	})
-	video.has_liked = likeResponse.ok
 	if (likeResponse.ok) {
 		video.likes += 1
+		video.has_liked = newState
+	} else {
+		video.has_liked = !newState
 	}
+	return video
 }

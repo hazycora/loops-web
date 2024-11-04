@@ -12,7 +12,7 @@
 	import type { Paginated, Video, Comment as CommentType } from '$lib/types'
 	export let video: Video
 	import { page } from '$app/stores'
-	import { downloadVideo, likeVideo, shareVideo } from '$lib/videoActions'
+	import { downloadVideo, toggleLikeVideo, shareVideo } from '$lib/videoActions'
 
 	let comments: Promise<Paginated<CommentType> | undefined>
 	let addedComments: CommentType[] = []
@@ -64,7 +64,9 @@
 	<div class="actions">
 		<IconButton
 			disabled={!$page.data.self}
-			on:click={() => likeVideo(video)}
+			on:click={async () => {
+				video = await toggleLikeVideo(video)
+			}}
 			size="2rem"
 			weight="regular"
 			icon={Heart}
@@ -122,6 +124,7 @@
 		display: grid;
 		grid-template-rows: min-content min-content 1fr;
 		background: rgb(255 255 255 / 0.1);
+		height: 100%;
 	}
 	.video-info {
 		padding: 0.5rem;
@@ -165,6 +168,8 @@
 	.comments {
 		margin: 0;
 		padding: 0.5rem;
+		overflow: hidden;
+		overflow-y: auto;
 		&:is(ul) {
 			display: flex;
 			flex-direction: column;

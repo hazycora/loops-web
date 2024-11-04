@@ -1,12 +1,45 @@
 <script lang="ts">
 	import '../app.pcss'
-	import type { Account } from '$lib/types'
+	import type { Account, Video } from '$lib/types'
 	import { House, User } from 'phosphor-svelte'
 	import { page } from '$app/stores'
+
+	import { onMount, setContext } from 'svelte'
+	import { writable } from 'svelte/store'
+	import VideoInfo from '$lib/Components/VideoInfo.svelte'
+	import { fade, fly } from 'svelte/transition'
+	import { cubicIn, cubicOut } from 'svelte/easing'
+
+	const videoPanel = writable<Video | undefined>(undefined)
+	setContext('videoPanel', videoPanel)
+
+	let videoPanelElement: HTMLElement | null = null
+
+	$: console.log($videoPanel)
 
 	export let data: { self?: Account }
 
 	$: isFeed = $page.route.id == '/(app)/feed'
+
+	function onPanelClick(event: Event) {
+		if (event.target == videoPanelElement) {
+			videoPanel.set(undefined)
+		}
+	}
+
+	function onPanelKeydown(event: KeyboardEvent) {
+		if (!$videoPanel) return
+		if (event.key == 'Escape') {
+			videoPanel.set(undefined)
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', onPanelKeydown)
+		return () => {
+			window.removeEventListener('keydown', onPanelKeydown)
+		}
+	})
 </script>
 
 <div class="app">
@@ -45,6 +78,24 @@
 		{/if}
 	</div>
 </div>
+
+{#if $videoPanel}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
+		bind:this={videoPanelElement}
+		transition:fade={{ duration: 400, easing: cubicOut }}
+		class="panel"
+		on:click={onPanelClick}
+	>
+		<div
+			transition:fly={{ y: '100vh', duration: 200, easing: cubicOut }}
+			class="info"
+		>
+			<VideoInfo video={$videoPanel} />
+		</div>
+	</div>
+{/if}
 
 <style lang="postcss">
 	.app {
@@ -99,6 +150,23 @@
 		}
 		.active {
 			color: var(--primary-clr);
+		}
+	}
+
+	.panel {
+		z-index: 9999;
+		position: fixed;
+		inset: 0;
+		display: grid;
+		align-items: end;
+		backdrop-filter: blur(0.5rem);
+		background-color: rgb(0 0 0 / 0.5);
+		.info {
+			background-color: black;
+			overflow: hidden;
+			border-start-start-radius: 0.5rem;
+			border-start-end-radius: 1rem;
+			height: 75%;
 		}
 	}
 

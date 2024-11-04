@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { Heart, DownloadSimple, Play } from 'phosphor-svelte'
+	import { Heart, ChatCircleText, DownloadSimple, Play } from 'phosphor-svelte'
 	import IconButton from './IconButton.svelte'
 	import { page } from '$app/stores'
 	import type { Video } from '$lib/types'
 	import { mobile } from '$lib/stores'
-	import { downloadVideo, likeVideo } from '$lib/videoActions'
+	import { downloadVideo, toggleLikeVideo } from '$lib/videoActions'
+	import { getContext } from 'svelte'
+	import type { Writable } from 'svelte/store'
 
 	export let video: Video
 	export let active = false
+
+	const videoPanel = <Writable<Video | undefined>>getContext('videoPanel')
 
 	let videoElement: HTMLVideoElement
 	let paused: boolean
@@ -22,12 +26,22 @@
 		}
 	}
 
+	$: {
+		if ($videoPanel) {
+			videoElement.pause()
+		}
+	}
+
 	function playVideo() {
 		videoElement.play()
 	}
 
 	function pauseVideo() {
 		videoElement.pause()
+	}
+
+	function openPanel() {
+		videoPanel.set(video)
 	}
 </script>
 
@@ -45,10 +59,12 @@
 	</video>
 	{#if paused || paused === undefined}
 		<button class="play-button visible" on:click={playVideo}>
-			<Play weight="fill" size="4rem" />
+			<span class="sr-only">play</span>
+			<Play aria-hidden="true" weight="fill" size="4rem" />
 		</button>
 	{:else}
-		<button class="play-button" on:click={pauseVideo}></button>
+		<button aria-label="pause" class="play-button" on:click={pauseVideo}
+		></button>
 	{/if}
 	<div class="interface">
 		<div class="details">
@@ -67,12 +83,21 @@
 				</a>
 				<IconButton
 					disabled={!$page.data.self}
-					on:click={() => likeVideo(video)}
+					on:click={async () => {
+						video = await toggleLikeVideo(video)
+					}}
 					size="3rem"
 					weight="regular"
 					icon={Heart}
 					label="like"
 					filled={video.has_liked}
+				/>
+				<IconButton
+					on:click={openPanel}
+					size="3rem"
+					weight="regular"
+					icon={ChatCircleText}
+					label="View comments"
 				/>
 				<IconButton
 					on:click={() => downloadVideo(video)}
