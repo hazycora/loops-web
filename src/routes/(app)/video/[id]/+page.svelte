@@ -18,7 +18,7 @@
 	value={{
 		type: 'video.other',
 		title: `${data.video.caption} by @${data.video.account.username} on Loops`,
-		description: `View ${data.video.account.name}'s videos`,
+		description: `${data.video.likes} likes, ${data.video.comments} comments - Uploaded by @${data.video.account.username} on Loops`,
 		video: data.video
 	}}
 />
