@@ -125,6 +125,7 @@
 		grid-template-rows: min-content min-content 1fr;
 		background: rgb(255 255 255 / 0.1);
 		height: 100%;
+		min-width: 0;
 	}
 	.video-info {
 		padding: 0.5rem;
@@ -133,6 +134,8 @@
 			margin-block-end: 0.5rem;
 			font-weight: 600;
 			font-size: 1.125rem;
+			word-wrap: break-word;
+			word-break: break-word;
 		}
 		.account {
 			display: flex;

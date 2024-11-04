@@ -8,9 +8,10 @@
 	import { writable } from 'svelte/store'
 	import VideoInfo from '$lib/Components/VideoInfo.svelte'
 	import { fade, fly } from 'svelte/transition'
-	import { cubicOut } from 'svelte/easing'
+	import { expoIn, expoOut } from 'svelte/easing'
 	import Button from '$lib/Components/Button.svelte'
 	import { onNavigate } from '$app/navigation'
+	import { mobile } from '$lib/stores'
 
 	const videoPanel = writable<Video | undefined>(undefined)
 	setContext('videoPanel', videoPanel)
@@ -77,17 +78,19 @@
 	</div>
 </div>
 
-{#if $videoPanel}
+{#if $mobile && $videoPanel}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		bind:this={videoPanelElement}
-		transition:fade={{ duration: 400, easing: cubicOut }}
+		in:fade={{ duration: 600, easing: expoOut }}
+		out:fade={{ duration: 300, easing: expoIn }}
 		class="panel"
 		on:click={onPanelClick}
 	>
 		<div
-			transition:fly={{ y: '100vh', duration: 200, easing: cubicOut }}
+			in:fly={{ y: '100vh', duration: 400, easing: expoOut }}
+			out:fly={{ y: '100vh', duration: 200, easing: expoIn }}
 			class="info"
 		>
 			<VideoInfo video={$videoPanel} />

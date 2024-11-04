@@ -3,7 +3,6 @@
 	import IconButton from './IconButton.svelte'
 	import { page } from '$app/stores'
 	import type { Video } from '$lib/types'
-	import { mobile } from '$lib/stores'
 	import { downloadVideo, toggleLikeVideo } from '$lib/videoActions'
 	import { getContext } from 'svelte'
 	import type { Writable } from 'svelte/store'
@@ -73,7 +72,9 @@
 				<span>@{video.account.username}</span>
 			</a>
 			{#if video.caption}
-				<p class="caption">{video.caption}</p>
+				<button class="caption invisible-button" on:click={openPanel}>
+					{video.caption}
+				</button>
 			{/if}
 		</div>
 		<div class="actions">
@@ -146,6 +147,7 @@
 		padding: 1rem 0.5rem;
 		height: min-content;
 		align-self: end;
+		min-width: 0;
 	}
 	.author {
 		display: grid;
@@ -169,6 +171,12 @@
 	.caption {
 		margin-block: 0;
 		margin-block-start: 0.5rem;
+
+		max-width: 100%;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		text-overflow: ellipsis;
 	}
 	.play-button {
 		color: inherit;
