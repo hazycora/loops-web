@@ -120,6 +120,7 @@
 		margin-block-start: 0.5rem;
 	}
 	.play-button {
+		color: inherit;
 		background: none;
 		border: none;
 		z-index: 100;
