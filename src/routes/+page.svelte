@@ -12,7 +12,7 @@
 
 <div class="page">
 	<form method="post">
-		<p>An unofficial client for <a href="https://loops.videos">Loops</a></p>
+		<p>An unofficial client for <a href="https://loops.video">Loops</a></p>
 		<label>
 			Email
 			<input type="text" name="email" placeholder="jane@example.com" />
