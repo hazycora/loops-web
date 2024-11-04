@@ -6,6 +6,7 @@
 	import LoadingSpinner from './LoadingSpinner.svelte'
 	import type { Paginated, Video, Comment as CommentType } from '$lib/types'
 	export let video: Video
+	import { page } from '$app/stores'
 
 	let comments: Promise<Paginated<CommentType> | undefined>
 	let addedComments: CommentType[] = []
@@ -72,10 +73,16 @@
 			<p class="comments">There are no comments yet.</p>
 		{/if}
 	{/await}
-	<form class="add-comment" on:submit={addComment}>
-		<input bind:value={commentValue} type="text" placeholder="Add comment" />
-		<IconButton type="submit" label="Send comment" icon={PaperPlaneTilt} />
-	</form>
+	{#if $page.data.self}
+		<form class="add-comment" on:submit={addComment}>
+			<input bind:value={commentValue} type="text" placeholder="Add comment" />
+			<IconButton type="submit" label="Send comment" icon={PaperPlaneTilt} />
+		</form>
+	{:else}
+		<div class="add-comment logged-out">
+			<span>You must be logged in to comment.</span>
+		</div>
+	{/if}
 </div>
 
 <style lang="postcss">
@@ -136,6 +143,9 @@
 		input {
 			background: none;
 			border: none;
+			padding: 0.5rem;
+		}
+		&.logged-out {
 			padding: 0.5rem;
 		}
 	}

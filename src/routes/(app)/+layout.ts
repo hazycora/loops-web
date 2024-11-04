@@ -15,7 +15,10 @@ async function updateSelf(options: { fetch: typeof fetch }) {
 	return self
 }
 
-export async function load({ fetch }) {
+export async function load({ data, fetch }) {
+	if (data?.guestSession) {
+		return { self: null }
+	}
 	if (!browser) {
 		return { self: await getSelf({ fetch }) }
 	}
