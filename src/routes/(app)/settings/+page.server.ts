@@ -27,15 +27,31 @@ export const actions = {
 				}
 			)
 			if (!updateAvatarResponse.ok) {
+				let message
+				try {
+					message = (await updateAvatarResponse.json()).message
+				} catch {
+					/* empty */
+				}
 				return {
 					success: false,
-					message: 'Failed to update avatar'
+					message: message ?? 'Failed to update avatar'
 				}
 			}
 		}
 
+		let message: string | null = null
+		if (!updateBioResponse.ok) {
+			try {
+				message = (await updateBioResponse.json()).message
+			} catch {
+				/* empty */
+			}
+		}
+
 		return {
-			success: updateBioResponse.ok
+			success: updateBioResponse.ok,
+			message
 		}
 	},
 	logout: async ({ cookies }) => {

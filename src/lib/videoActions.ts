@@ -47,6 +47,7 @@ export async function toggleLikeVideo(video: Video) {
 		video.has_liked = newState
 	} else {
 		video.has_liked = !newState
+		console.error('Failed to toggle like status', await likeResponse.json())
 	}
 	return video
 }

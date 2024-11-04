@@ -16,6 +16,17 @@ export const actions = {
 			body: videoForm
 		})
 
+		if (!postVideoResponse.ok) {
+			let message: string | null = null
+			try {
+				message = (await postVideoResponse.json()).message
+			} catch {
+				/* empty */
+			}
+			console.error('Failed to upload video.', message)
+			error(500, message ?? 'Uploading video failed')
+		}
+
 		const postVideo = await postVideoResponse.json()
 
 		return {

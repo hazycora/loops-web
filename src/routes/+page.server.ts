@@ -34,8 +34,9 @@ export const actions = {
 			!authResponse.ok ||
 			authResponse.headers.get('content-type') !== 'application/json'
 		) {
-			console.error('Failed to log in.', authResponse.status)
-			error(500, 'Logging in failed.')
+			const { message } = await authResponse.json()
+			console.error('Failed to log in.', message)
+			error(500, 'Logging in failed: ' + message)
 		}
 		const tokenData = <{ auth_token: string }>await authResponse.json()
 		cookies.set('token', tokenData.auth_token, {

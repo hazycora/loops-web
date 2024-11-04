@@ -30,6 +30,7 @@ async function proxyLoopsApi(event: RequestEvent) {
 	}
 
 	const headers: { [key: string]: string } = {
+		Accept: 'application/json',
 		'Content-Type': request.headers.get('content-type') || 'application/json'
 	}
 
@@ -52,6 +53,17 @@ async function proxyLoopsApi(event: RequestEvent) {
 
 	if (!isJson) {
 		error(500, 'Invalid response from Loops API')
+	}
+
+	if (!response.ok) {
+		const error = await response.json()
+		console.log('Error from Loops API', url.pathname, error)
+		return new Response(JSON.stringify(error), {
+			status: response.status,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
 	}
 
 	const responseBody = await response.blob()
