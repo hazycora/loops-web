@@ -35,7 +35,10 @@ export const actions = {
 			error(500, 'Logging in failed.')
 		}
 		const tokenData = <{ auth_token: string }>await authResponse.json()
-		cookies.set('token', tokenData.auth_token, { path: '/' })
+		cookies.set('token', tokenData.auth_token, {
+			path: '/',
+			maxAge: 60 * 60 * 24 * 30
+		})
 
 		redirect(303, '/feed')
 	}
