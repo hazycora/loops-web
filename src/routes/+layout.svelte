@@ -96,8 +96,10 @@
 		width: 100%;
 		height: 100%;
 		grid-template-rows: auto 1fr;
-		@media (max-width: 40rem) {
-			grid-template-rows: 1fr auto;
+		&:has(nav.desktop) {
+			@media (max-width: 40rem) {
+				grid-template-rows: 1fr auto;
+			}
 		}
 		max-width: 80rem;
 		margin-inline: auto;
