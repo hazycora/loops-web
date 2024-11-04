@@ -8,18 +8,15 @@
 	import { writable } from 'svelte/store'
 	import VideoInfo from '$lib/Components/VideoInfo.svelte'
 	import { fade, fly } from 'svelte/transition'
-	import { cubicIn, cubicOut } from 'svelte/easing'
+	import { cubicOut } from 'svelte/easing'
+	import Button from '$lib/Components/Button.svelte'
 
 	const videoPanel = writable<Video | undefined>(undefined)
 	setContext('videoPanel', videoPanel)
 
 	let videoPanelElement: HTMLElement | null = null
 
-	$: console.log($videoPanel)
-
-	export let data: { self?: Account }
-
-	$: isFeed = $page.route.id == '/(app)/feed'
+	$: self = <Account>$page.data.self
 
 	function onPanelClick(event: Event) {
 		if (event.target == videoPanelElement) {
@@ -43,33 +40,29 @@
 </script>
 
 <div class="app">
-	<nav class="desktop">
+	<nav class="logged-out" class:desktop={self}>
 		<a class="wordmark" href="/">Loops</a>
-		{#if data.self}
-			<a href="/user/{data.self.id}" class="me">
-				<img src={data.self.avatar} alt="" />
+		{#if self}
+			<a href="/user/{self.id}" class="me">
+				<img src={self.avatar} alt="" />
 			</a>
+		{:else}
+			<Button href="/" text="Log in" />
 		{/if}
 	</nav>
 	<div class="content">
-		{#if isFeed}
+		<main>
 			<slot />
-		{:else}
-			<main>
-				<slot />
-			</main>
-		{/if}
-		{#if $page.data.self}
+		</main>
+		{#if self}
 			<nav class="mobile">
 				<a href="/feed" class:active={$page.url.pathname == '/feed'}>
 					<House size="2rem" />
 					<span class="label">Feed</span>
 				</a>
 				<a
-					href="/user/{$page.data.self.id}"
-					class:active={$page.url.pathname.startsWith(
-						`/user/${$page.data.self.id}`
-					)}
+					href="/user/{self.id}"
+					class:active={$page.url.pathname.startsWith(`/user/${self.id}`)}
 				>
 					<User size="2rem" />
 					<span class="label">Profile</span>
@@ -103,10 +96,14 @@
 		width: 100%;
 		height: 100%;
 		grid-template-rows: auto 1fr;
+		@media (max-width: 40rem) {
+			grid-template-rows: 1fr auto;
+		}
 		max-width: 80rem;
 		margin-inline: auto;
 	}
-	nav.desktop {
+	nav.desktop,
+	nav.logged-out {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -130,6 +127,10 @@
 		padding: 0.25rem 0.5rem;
 		overflow: hidden;
 		overflow-y: auto;
+		grid-template-rows: 1fr auto;
+		main {
+			min-height: 0;
+		}
 	}
 
 	nav.mobile {
@@ -178,13 +179,17 @@
 			padding: 0;
 			grid-template-rows: 1fr auto;
 			height: 100%;
-			height: 100vh;
-			height: 100svh;
 		}
 		main {
 			padding: 0.25rem 0.5rem;
 			overflow: hidden;
 			overflow-y: auto;
+		}
+	}
+
+	@media not (max-width: 40rem) {
+		nav.mobile {
+			display: none;
 		}
 	}
 </style>

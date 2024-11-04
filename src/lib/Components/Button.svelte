@@ -3,18 +3,22 @@
 
 	export let text: string
 	export let href: string | null = null
-	export let icon: ComponentType
+	export let icon: ComponentType | null = null
 	export let type: 'submit' | null = null
 </script>
 
 {#if href}
 	<a {href} class="button">
-		<svelte:component this={icon} weight="bold" size="1.125rem" />
+		{#if icon}
+			<svelte:component this={icon} weight="bold" size="1.125rem" />
+		{/if}
 		{text}
 	</a>
 {:else}
 	<button {type} on:click class="button">
-		<svelte:component this={icon} weight="bold" size="1.125rem" />
+		{#if icon}
+			<svelte:component this={icon} weight="bold" size="1.125rem" />
+		{/if}
 		{text}
 	</button>
 {/if}

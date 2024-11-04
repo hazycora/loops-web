@@ -53,10 +53,9 @@
 			<FeedVideo {video} active={activeIndex == i} />
 		{/each}
 	</div>
-
-	{#if !$mobile && activeVideo}
+	<div class="info">
 		<VideoInfo video={activeVideo} />
-	{/if}
+	</div>
 </div>
 
 <style lang="postcss">
@@ -64,19 +63,18 @@
 		display: grid;
 		@media not (max-width: 40rem) {
 			grid-template-columns: 1fr 1fr;
-			aspect-ratio: 18 / 16;
 			border-radius: 0.5rem;
+			height: 100%;
 		}
-		max-width: 100%;
-		max-height: 100%;
 		overflow: hidden;
 		margin-inline: auto;
 		align-self: center;
+
+		margin: -0.25rem -0.5rem;
+		width: calc(100% + 1rem);
+		height: calc(100% + 0.5rem);
 	}
 	.feed {
-		@media not (max-width: 40rem) {
-			aspect-ratio: 9 / 16;
-		}
 		width: 100%;
 		min-width: 0;
 		min-height: 0;
@@ -86,5 +84,10 @@
 
 		scroll-snap-type: y mandatory;
 		scrollbar-width: none;
+	}
+	@media (max-width: 40rem) {
+		.info {
+			display: none;
+		}
 	}
 </style>

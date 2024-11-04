@@ -76,38 +76,36 @@
 				<p class="caption">{video.caption}</p>
 			{/if}
 		</div>
-		{#if $mobile}
-			<div class="actions">
-				<a href="/user/{video.account.id}">
-					<img src={video.account.avatar} alt="" class="avatar" />
-				</a>
-				<IconButton
-					disabled={!$page.data.self}
-					on:click={async () => {
-						video = await toggleLikeVideo(video)
-					}}
-					size="3rem"
-					weight="regular"
-					icon={Heart}
-					label="like"
-					filled={video.has_liked}
-				/>
-				<IconButton
-					on:click={openPanel}
-					size="3rem"
-					weight="regular"
-					icon={ChatCircleText}
-					label="View comments"
-				/>
-				<IconButton
-					on:click={() => downloadVideo(video)}
-					size="3rem"
-					weight="regular"
-					icon={DownloadSimple}
-					label="Download"
-				/>
-			</div>
-		{/if}
+		<div class="actions">
+			<a href="/user/{video.account.id}">
+				<img src={video.account.avatar} alt="" class="avatar" />
+			</a>
+			<IconButton
+				disabled={!$page.data.self}
+				on:click={async () => {
+					video = await toggleLikeVideo(video)
+				}}
+				size="3rem"
+				weight="regular"
+				icon={Heart}
+				label="like"
+				filled={video.has_liked}
+			/>
+			<IconButton
+				on:click={openPanel}
+				size="3rem"
+				weight="regular"
+				icon={ChatCircleText}
+				label="View comments"
+			/>
+			<IconButton
+				on:click={() => downloadVideo(video)}
+				size="3rem"
+				weight="regular"
+				icon={DownloadSimple}
+				label="Download"
+			/>
+		</div>
 	</div>
 </div>
 
@@ -119,12 +117,15 @@
 			grid-area: 1 / 1;
 		}
 		height: 100%;
+		min-height: 0;
 		& video {
-			width: 100%;
-			height: 100%;
+			max-width: 100%;
+			max-height: 100%;
 			object-fit: cover;
 			object-position: center;
 			overflow: hidden;
+
+			place-self: center;
 		}
 	}
 
@@ -195,6 +196,11 @@
 			border-radius: 100%;
 			width: 2.75rem;
 			height: 2.75rem;
+		}
+	}
+	@media not (max-width: 40rem) {
+		.actions {
+			display: none;
 		}
 	}
 </style>

@@ -36,7 +36,7 @@
 			</a>
 			<p class="caption">{comment.caption}</p>
 		</div>
-		{#if self.id == comment.account.id}
+		{#if self && self.id == comment.account.id}
 			<div class="actions">
 				<IconButton
 					on:click={deleteComment}
