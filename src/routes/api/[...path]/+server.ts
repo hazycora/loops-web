@@ -1,5 +1,6 @@
 import type { RequestEvent } from './$types.js'
 import { env } from '$env/dynamic/private'
+import { error } from '@sveltejs/kit'
 
 const LOOPS_PUBLIC_TOKEN = env.LOOPS_PUBLIC_TOKEN
 
@@ -44,6 +45,15 @@ async function proxyLoopsApi(event: RequestEvent) {
 			body: body
 		}
 	)
+
+	const isJson = response.headers
+		.get('content-type')
+		?.includes('application/json')
+
+	if (!isJson) {
+		error(500, 'Invalid response from Loops API')
+	}
+
 	const responseBody = await response.blob()
 	return new Response(responseBody)
 }

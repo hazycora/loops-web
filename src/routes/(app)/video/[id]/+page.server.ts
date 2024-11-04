@@ -1,5 +1,6 @@
 import extendPaginated from '$lib/extendPaginated.js'
 import type { Feed, Video } from '$lib/types'
+import { error } from '@sveltejs/kit'
 
 async function loadVideoWithContext(
 	id: string,
@@ -7,6 +8,10 @@ async function loadVideoWithContext(
 ) {
 	const fetch = options.fetch
 	const videoResponse = await fetch(`/api/v0/video/id/${id}`)
+	if (!videoResponse.ok) {
+		const { message } = await videoResponse.json()
+		error(500, message)
+	}
 	const video = <Video>await videoResponse.json()
 	const accountFeedResponse = await fetch(
 		`/api/v0/user/videos/${video.account.id}`
