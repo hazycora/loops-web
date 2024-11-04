@@ -28,15 +28,19 @@ async function proxyLoopsApi(event: RequestEvent) {
 		}
 	}
 
+	const headers: { [key: string]: string } = {
+		'Content-Type': request.headers.get('content-type') || 'application/json'
+	}
+
+	if (authorization) {
+		headers['Authorization'] = authorization
+	}
+
 	const response = await fetch(
 		`https://loops.video${url.pathname}${url.search}`,
 		{
 			method: request.method,
-			headers: {
-				Authorization: authorization,
-				'Content-Type':
-					request.headers.get('content-type') || 'application/json'
-			},
+			headers: headers,
 			body: body
 		}
 	)
