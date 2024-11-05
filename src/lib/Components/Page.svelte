@@ -16,14 +16,6 @@
 </div>
 
 <style lang="postcss">
-	:global(.app:not(:has(> nav.desktop))) header {
-		display: none;
-	}
-	@media not (max-width: 40rem) {
-		header {
-			display: none;
-		}
-	}
 	header {
 		background-color: rgb(0 0 0 / 0.75);
 		backdrop-filter: blur(10px);
@@ -52,5 +44,13 @@
 		padding: 0.75rem 0.5rem;
 		padding-block-left: calc(env(safe-area-inset-left) + 0.5rem);
 		padding-block-right: calc(env(safe-area-inset-right) + 0.5rem);
+	}
+	:global(.app:not(:has(> nav.desktop))) header {
+		display: none;
+	}
+	@media not (max-width: 40rem) {
+		header {
+			display: none;
+		}
 	}
 </style>
