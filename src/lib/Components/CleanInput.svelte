@@ -20,10 +20,11 @@
 	form {
 		display: grid;
 		grid-template-columns: 1fr min-content;
+		align-items: center;
 		input {
 			background: none;
 			border: none;
-			padding: 0.5rem;
+			padding: 0.75rem 0.5rem;
 		}
 	}
 </style>
