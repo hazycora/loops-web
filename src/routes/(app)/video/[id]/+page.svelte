@@ -19,6 +19,7 @@
 		type: 'video.other',
 		title: `${data.video.caption} by @${data.video.account.username} on Loops`,
 		description: `${data.video.likes} likes, ${data.video.comments} comments - Uploaded by @${data.video.account.username} on Loops`,
+		image: data.video.media.thumbnail,
 		video: data.video
 	}}
 />

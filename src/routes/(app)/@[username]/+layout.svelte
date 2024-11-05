@@ -8,8 +8,8 @@
 
 <MetaTags
 	value={{
-		title: `@${data.account.username} on Loops`,
-		description: `View ${data.account.name}'s profile and videos`,
+		title: `${data.account.name} on Loops`,
+		description: `View @${data.account.username}'s profile and videos`,
 		image: data.account.avatar
 	}}
 />
