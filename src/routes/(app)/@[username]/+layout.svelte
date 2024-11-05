@@ -14,7 +14,12 @@
 	}}
 />
 
-<Page title={data.account.name}>
+<Page
+	title={data.account.name}
+	subtitle="{data.account.post_count} video{data.account.post_count == 1
+		? ''
+		: 's'}"
+>
 	<div class="profile">
 		<Profile account={data.account} followState={data.followState} />
 		<slot />

@@ -28,12 +28,15 @@
 		background-color: rgb(0 0 0 / 0.75);
 		backdrop-filter: blur(10px);
 		border-block-end: 1px solid var(--border-clr);
-		padding: 0.75rem 0.5rem;
-		padding-block-start: calc(env(safe-area-inset-top) + 0.75rem);
+		padding: 0.625rem 0.5rem;
+		padding-block-start: calc(env(safe-area-inset-top) + 0.625rem);
 		position: sticky;
 		top: 0;
 		text-align: center;
 		line-height: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 	}
 	.title {
 		font-weight: 700;
@@ -43,6 +46,7 @@
 	.subtitle {
 		color: var(--muted-clr);
 		text-align: center;
+		font-size: 0.75rem;
 	}
 	main {
 		padding: 0.75rem 0.5rem;
