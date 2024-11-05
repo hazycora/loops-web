@@ -6,7 +6,9 @@
 
 :root {
 	height: 100%;
-	scrollbar-gutter: stable;
+	@media not (max-width: 40rem) {
+		scrollbar-gutter: stable;
+	}
 	scrollbar-color: var(--border-clr) var(--bg-clr);
 	scrollbar-width: thin;
 
