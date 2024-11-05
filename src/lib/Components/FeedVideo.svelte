@@ -113,6 +113,7 @@
 <style lang="postcss">
 	.video {
 		scroll-snap-align: start;
+		scroll-snap-stop: always;
 		display: grid;
 		> * {
 			grid-area: 1 / 1;
