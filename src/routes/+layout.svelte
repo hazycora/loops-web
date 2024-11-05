@@ -145,6 +145,10 @@
 		}
 		max-width: 80rem;
 		margin-inline: auto;
+
+		padding-block-start: env(safe-area-inset-top);
+		padding-block-left: env(safe-area-inset-left);
+		padding-block-right: env(safe-area-inset-right);
 	}
 	nav.desktop,
 	nav.logged-out {
