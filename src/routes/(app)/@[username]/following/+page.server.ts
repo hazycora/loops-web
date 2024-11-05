@@ -11,8 +11,9 @@ async function getAccountFollowing(
 	return extendPaginated(following, { fetch, pages: 2 })
 }
 
-export async function load({ fetch, params }) {
-	const id = params.id
+export async function load({ fetch, parent }) {
+	const layoutData = await parent()
+	const id = layoutData.account.id
 	const accountFollowing = await getAccountFollowing(id, {
 		fetch
 	})

@@ -8,8 +8,9 @@ async function getAccountFeed(id: string, options: { fetch: typeof fetch }) {
 	return await extendPaginated(feed, { fetch, pages: 1 })
 }
 
-export async function load({ fetch, params }) {
-	const id = params.id
+export async function load({ parent, fetch }) {
+	const layoutData = await parent()
+	const id = layoutData.account.id
 	const feed = await getAccountFeed(id, { fetch })
 	return {
 		feed
