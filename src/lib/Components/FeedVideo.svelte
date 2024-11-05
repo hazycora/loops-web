@@ -7,7 +7,6 @@
 	import { getContext } from 'svelte'
 	import type { Writable } from 'svelte/store'
 	import { fade, scale } from 'svelte/transition'
-	import { expoIn } from 'svelte/easing'
 
 	export let video: Video
 	export let active = false
