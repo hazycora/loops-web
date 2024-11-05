@@ -28,7 +28,7 @@
 </script>
 
 <div class="profile">
-	<a href="/user/{account.id}" class="upfront">
+	<a href="/@{account.username}" class="upfront">
 		<img src={account.avatar} alt="" class="avatar" />
 		<div class="names">
 			{#if account.username != account.name}
@@ -38,13 +38,13 @@
 		</div>
 	</a>
 	<div class="stats">
-		<a href="/user/{account.id}/followers">
+		<a href="/@{account.username}/followers">
 			<dl>
 				<dd>{account.follower_count}</dd>
 				<dt>Followers</dt>
 			</dl>
 		</a>
-		<a href="/user/{account.id}/following">
+		<a href="/@{account.username}/following">
 			<dl>
 				<dd>{account.following_count}</dd>
 				<dt>Following</dt>

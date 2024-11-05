@@ -4,7 +4,7 @@
 	export let account: Account
 </script>
 
-<a href="/user/{account.id}" class="profile">
+<a href="/@{account.username}" class="profile">
 	<img src={account.avatar} alt="" class="avatar" />
 	<div class="names">
 		{#if account.username != account.name}

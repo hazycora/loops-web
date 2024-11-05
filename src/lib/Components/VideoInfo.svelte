@@ -52,7 +52,7 @@
 		{#if video.caption}
 			<p class="caption">{video.caption}</p>
 		{/if}
-		<a href="/user/{video.account.id}" class="account">
+		<a href="/@{video.account.username}" class="account">
 			<img src={video.account.avatar} alt="" class="avatar" />
 			<div class="names">
 				{#if video.account.username != video.account.name}

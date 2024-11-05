@@ -67,7 +67,7 @@
 				<a href="/notifications">
 					<Bell weight="bold" size="1.5rem" />
 				</a>
-				<a href="/user/{self.id}" class="me">
+				<a href="/@{self.username}" class="me">
 					<img src={self.avatar} alt="" />
 				</a>
 			{:else}
@@ -101,8 +101,8 @@
 					<span class="label">Notifications</span>
 				</a>
 				<a
-					href="/user/{self.id}"
-					class:active={$page.url.pathname.startsWith(`/user/${self.id}`)}
+					href="/@{self.username}"
+					class:active={$page.url.pathname.startsWith(`/@${self.username}`)}
 				>
 					<User size="2rem" />
 					<span class="label">Profile</span>

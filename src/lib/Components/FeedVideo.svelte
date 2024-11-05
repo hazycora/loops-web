@@ -86,7 +86,7 @@
 	{/if}
 	<div class="interface">
 		<div class="details">
-			<a href="/user/{video.account.id}" class="author">
+			<a href="/@{video.account.username}" class="author">
 				<img src={video.account.avatar} alt="" class="avatar" />
 				<span>@{video.account.username}</span>
 			</a>
@@ -97,7 +97,7 @@
 			{/if}
 		</div>
 		<div class="actions">
-			<a href="/user/{video.account.id}">
+			<a href="/@{video.account.username}">
 				<img src={video.account.avatar} alt="" class="avatar" />
 			</a>
 			<IconButton

@@ -24,11 +24,11 @@
 
 {#if active}
 	<li class="comment">
-		<a href="/user/{comment.account.id}">
+		<a href="/@{comment.account.username}">
 			<img src={comment.account.avatar} alt="" class="avatar" />
 		</a>
 		<div class="text">
-			<a href="/user/{comment.account.id}" class="account">
+			<a href="/@{comment.account.username}" class="account">
 				{#if comment.account.username != comment.account.name}
 					<span class="name">{comment.account.name}</span>
 				{/if}

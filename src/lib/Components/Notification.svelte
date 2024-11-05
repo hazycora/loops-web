@@ -5,7 +5,7 @@
 </script>
 
 {#if notification.type == 'new_follower'}
-	<a href="/user/{notification.actor.id}" class="notification">
+	<a href="/@{notification.actor.username}" class="notification">
 		<img src={notification.actor.avatar} alt="" class="avatar" />
 		<div class="text">
 			<strong class="actor">@{notification.actor.username}</strong>
@@ -14,11 +14,13 @@
 	</a>
 {:else if notification.type == 'video.like'}
 	<div class="notification">
-		<img src={notification.actor.avatar} alt="" class="avatar" />
-		<div class="text">
+		<a href="/@{notification.actor.username}">
+			<img src={notification.actor.avatar} alt="" class="avatar" />
+		</a>
+		<a href="/@{notification.actor.username}" class="text">
 			<strong class="actor">@{notification.actor.username}</strong>
 			<span>liked your video</span>
-		</div>
+		</a>
 		<a href="/video/{notification.video_id}" class="thumbnail">
 			<img src={notification.video_thumbnail} alt="" />
 		</a>
