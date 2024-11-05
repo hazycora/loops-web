@@ -1,4 +1,7 @@
 import { redirect } from '@sveltejs/kit'
+import { env } from '$env/dynamic/private'
+
+const ALLOW_HTTP = env.ALLOW_HTTP
 
 export const actions = {
 	updateprofile: async ({ fetch, request }) => {
@@ -55,7 +58,8 @@ export const actions = {
 		}
 	},
 	logout: async ({ cookies }) => {
-		cookies.delete('token', { path: '/' })
+		cookies.delete('token', { path: '/', maxAge: 60 * 60 * 24 * 30,
+                        secure: !ALLOW_HTTP })
 		redirect(303, '/')
 	}
 }
