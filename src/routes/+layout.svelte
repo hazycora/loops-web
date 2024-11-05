@@ -156,8 +156,8 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0 0.5rem;
-		height: 3rem;
+		padding: 0.25rem 0.5rem;
+		padding-block-start: calc(env(safe-area-inset-top) + 0.25rem);
 		.wordmark {
 			text-decoration: none;
 			color: inherit;
