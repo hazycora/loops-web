@@ -1,7 +1,14 @@
 <script lang="ts">
 	import '../app.pcss'
 	import type { Account, Video } from '$lib/types'
-	import { House, UploadSimple, User } from 'phosphor-svelte'
+	import {
+		MagnifyingGlass,
+		House,
+		Compass,
+		UploadSimple,
+		Bell,
+		User
+	} from 'phosphor-svelte'
 	import { page } from '$app/stores'
 
 	import { onMount, setContext } from 'svelte'
@@ -19,6 +26,10 @@
 	let videoPanelElement: HTMLElement | null = null
 
 	$: self = <Account>$page.data.self
+
+	$: isVideoPage =
+		$page.url.pathname.startsWith('/video/') ||
+		$page.url.pathname.startsWith('/feed')
 
 	function onPanelClick(event: Event) {
 		if (event.target == videoPanelElement) {
@@ -48,27 +59,46 @@
 <div class="app">
 	<nav class="logged-out" class:desktop={self}>
 		<a class="wordmark" href="/">Loops</a>
-		{#if self}
-			<a href="/user/{self.id}" class="me">
-				<img src={self.avatar} alt="" />
+		<div class="actions">
+			<a href="/discover">
+				<MagnifyingGlass weight="bold" size="1.5rem" />
 			</a>
-		{:else}
-			<Button href="/" text="Log in" />
-		{/if}
+			{#if self}
+				<a href="/notifications">
+					<Bell weight="bold" size="1.5rem" />
+				</a>
+				<a href="/user/{self.id}" class="me">
+					<img src={self.avatar} alt="" />
+				</a>
+			{:else}
+				<Button href="/" text="Log in" />
+			{/if}
+		</div>
 	</nav>
-	<div class="content">
-		<main>
+	<div class="content" class:video-page={isVideoPage}>
+		<div class="page-root">
 			<slot />
-		</main>
+		</div>
 		{#if self}
 			<nav class="mobile">
 				<a href="/feed" class:active={$page.url.pathname == '/feed'}>
 					<House size="2rem" />
 					<span class="label">Feed</span>
 				</a>
+				<a href="/discover" class:active={$page.url.pathname == '/discover'}>
+					<Compass size="2rem" />
+					<span class="label">Discover</span>
+				</a>
 				<a href="/upload" class:active={$page.url.pathname == '/upload'}>
 					<UploadSimple size="2rem" />
 					<span class="label">Upload</span>
+				</a>
+				<a
+					href="/notifications"
+					class:active={$page.url.pathname == '/notifications'}
+				>
+					<Bell size="2rem" />
+					<span class="label">Notifications</span>
 				</a>
 				<a
 					href="/user/{self.id}"
@@ -118,10 +148,15 @@
 	}
 	nav.desktop,
 	nav.logged-out {
+		background-color: rgb(0 0 0 / 0.75);
+		backdrop-filter: blur(10px);
+		border-block-end: 1px solid var(--border-clr);
+		position: sticky;
+		top: 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.25rem 0.5rem;
+		padding: 0 0.5rem;
 		height: 3rem;
 		.wordmark {
 			text-decoration: none;
@@ -135,14 +170,33 @@
 			width: 2rem;
 			aspect-ratio: 1;
 		}
+		.actions {
+			height: 100%;
+			display: flex;
+			gap: 0.75rem;
+			align-items: center;
+			a {
+				padding: 0.25rem;
+				height: 2rem;
+				width: 2rem;
+				color: inherit;
+				text-decoration: none;
+			}
+		}
 	}
 	.content {
 		display: grid;
 		padding: 0.25rem 0.5rem;
-		overflow: hidden;
-		overflow-y: auto;
+		@media (max-width: 40rem) {
+			overflow: hidden;
+			overflow-y: auto;
+		}
+		&.video-page {
+			overflow: hidden;
+			overflow-y: auto;
+		}
 		grid-template-rows: 1fr auto;
-		main {
+		.page-root {
 			min-height: 0;
 		}
 	}
@@ -194,11 +248,7 @@
 			grid-template-rows: 1fr auto;
 			height: 100%;
 		}
-		main {
-			padding: 0.25rem 0.5rem;
-			padding-block-start: calc(env(safe-area-inset-top) + 0.25rem);
-			padding-block-left: calc(env(safe-area-inset-left) + 0.5rem);
-			padding-block-right: calc(env(safe-area-inset-right) + 0.5rem);
+		.page-root {
 			overflow: hidden;
 			overflow-y: auto;
 		}

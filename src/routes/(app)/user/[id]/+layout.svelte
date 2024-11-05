@@ -1,6 +1,7 @@
 <script lang="ts">
 	import MetaTags from '$lib/Components/MetaTags.svelte'
 	import Profile from '$lib/Components/Profile.svelte'
+	import Page from '$lib/Components/Page.svelte'
 
 	export let data
 </script>
@@ -13,10 +14,12 @@
 	}}
 />
 
-<div class="profile">
-	<Profile account={data.account} followState={data.followState} />
-	<slot />
-</div>
+<Page title={data.account.name}>
+	<div class="profile">
+		<Profile account={data.account} followState={data.followState} />
+		<slot />
+	</div>
+</Page>
 
 <style lang="postcss">
 	.profile {

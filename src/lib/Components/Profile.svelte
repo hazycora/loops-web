@@ -76,6 +76,7 @@
 		gap: 0.5rem;
 		color: inherit;
 		text-decoration: none;
+		width: fit-content;
 	}
 	.avatar {
 		width: 3rem;

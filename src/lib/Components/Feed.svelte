@@ -3,7 +3,6 @@
 	import FeedVideo from './FeedVideo.svelte'
 	import extendPaginated from '$lib/extendPaginated'
 
-	import { mobile } from '$lib/stores'
 	import VideoInfo from './VideoInfo.svelte'
 	import type { Feed, Video } from '$lib/types'
 
@@ -70,9 +69,8 @@
 		margin-inline: auto;
 		align-self: center;
 
-		margin: -0.25rem -0.5rem;
-		width: calc(100% + 1rem);
-		height: calc(100% + 0.5rem);
+		width: 100%;
+		height: 100%;
 	}
 	.feed {
 		width: 100%;

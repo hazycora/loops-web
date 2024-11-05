@@ -30,6 +30,12 @@ export interface Video {
 	has_liked: boolean
 }
 
+export interface Actor {
+	id: string
+	username: string
+	avatar: string
+}
+
 export interface Account {
 	id: string
 	name: string
@@ -44,6 +50,24 @@ export interface Account {
 	is_blocking: boolean
 	created_at: string
 }
+
+export interface BaseNotification {
+	id: string
+	actor: Actor
+	created_at: string
+}
+
+export interface FollowNotification extends BaseNotification {
+	type: 'new_follower'
+}
+
+export interface VideoLikeNotification extends BaseNotification {
+	type: 'video.like'
+	video_id: string
+	video_thumbnail: string
+}
+
+export type Notification = FollowNotification | VideoLikeNotification
 
 export interface Media {
 	width: number

@@ -5,8 +5,14 @@ import { error } from '@sveltejs/kit'
 const LOOPS_PUBLIC_TOKEN = env.LOOPS_PUBLIC_TOKEN
 
 function canUsePublicToken(request: Request): boolean {
-	if (request.method != 'GET') return false
 	const url = new URL(request.url)
+	if (request.method != 'GET') {
+		if (url.pathname == '/api/v0/search' && request.method == 'POST') {
+			// why is this POST???
+			return true
+		}
+		return false
+	}
 	if (!url.pathname.startsWith('/api/v0/')) return false
 	if (url.pathname.startsWith('/api/v0/user/self')) return false
 	return true
@@ -57,7 +63,7 @@ async function proxyLoopsApi(event: RequestEvent) {
 
 	if (!response.ok) {
 		const error = await response.json()
-		console.log('Error from Loops API', url.pathname, error)
+		console.error('Error from Loops API', url.pathname, error)
 		return new Response(JSON.stringify(error), {
 			status: response.status,
 			headers: {

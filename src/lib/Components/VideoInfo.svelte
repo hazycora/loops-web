@@ -13,6 +13,7 @@
 	export let video: Video
 	import { page } from '$app/stores'
 	import { downloadVideo, toggleLikeVideo, shareVideo } from '$lib/videoActions'
+	import CleanInput from './CleanInput.svelte'
 
 	let comments: Promise<Paginated<CommentType> | undefined>
 	let addedComments: CommentType[] = []
@@ -108,10 +109,13 @@
 		{/if}
 	{/await}
 	{#if $page.data.self}
-		<form class="add-comment" on:submit={addComment}>
-			<input bind:value={commentValue} type="text" placeholder="Add comment" />
-			<IconButton type="submit" label="Send comment" icon={PaperPlaneTilt} />
-		</form>
+		<CleanInput
+			on:submit={addComment}
+			bind:value={commentValue}
+			placeholder="Add comment"
+			submitLabel="Send comment"
+			icon={PaperPlaneTilt}
+		/>
 	{:else}
 		<div class="add-comment logged-out">
 			<span>You must be logged in to comment.</span>
@@ -166,7 +170,7 @@
 	.actions {
 		display: flex;
 		justify-content: space-around;
-		border-block-end: 1px solid rgb(255 255 255 / 0.2);
+		border-block-end: 1px solid var(--border-clr);
 	}
 	.comments {
 		margin: 0;
@@ -179,18 +183,9 @@
 			gap: 0.5rem;
 			list-style: none;
 		}
+		border-block-end: 1px solid var(--border-clr);
 	}
-	.add-comment {
-		border-block-start: 1px solid rgb(255 255 255 / 0.2);
-		display: grid;
-		grid-template-columns: 1fr min-content;
-		input {
-			background: none;
-			border: none;
-			padding: 0.5rem;
-		}
-		&.logged-out {
-			padding: 0.5rem;
-		}
+	.add-comment.logged-out {
+		padding: 0.5rem;
 	}
 </style>
