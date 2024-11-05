@@ -6,6 +6,8 @@
 	import { downloadVideo, toggleLikeVideo } from '$lib/videoActions'
 	import { getContext } from 'svelte'
 	import type { Writable } from 'svelte/store'
+	import { fade, scale } from 'svelte/transition'
+	import { expoIn } from 'svelte/easing'
 
 	export let video: Video
 	export let active = false
@@ -15,12 +17,19 @@
 	let videoElement: HTMLVideoElement
 	let paused: boolean
 
+	let ready = false
+	let currentTime: number
+	let duration: number
+
 	$: {
 		if (videoElement) {
+			ready = false
 			if (!active) {
 				videoElement.pause()
+				videoElement.currentTime = 0
 			} else {
 				videoElement.play()
+				ready = true
 			}
 		}
 	}
@@ -48,6 +57,8 @@
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
 		bind:this={videoElement}
+		bind:currentTime
+		bind:duration
 		bind:paused
 		poster={video.media.thumbnail}
 		autoplay={active}
@@ -56,14 +67,22 @@
 	>
 		<source src={video.media.src_url} />
 	</video>
-	{#if paused || paused === undefined}
-		<button class="play-button visible" on:click={playVideo}>
-			<span class="sr-only">play</span>
-			<Play aria-hidden="true" weight="fill" size="4rem" />
-		</button>
-	{:else}
-		<button aria-label="pause" class="play-button" on:click={pauseVideo}
-		></button>
+	{#if ready}
+		{#if paused || paused === undefined}
+			<button
+				transition:fade={{ duration: 150 }}
+				class="play-button visible"
+				on:click={playVideo}
+			>
+				<span class="sr-only">play</span>
+				<div transition:scale={{ duration: 250, start: 0.9 }}>
+					<Play aria-hidden="true" weight="fill" size="4rem" />
+				</div>
+			</button>
+		{:else}
+			<button aria-label="pause" class="play-button" on:click={pauseVideo}
+			></button>
+		{/if}
 	{/if}
 	<div class="interface">
 		<div class="details">
@@ -107,6 +126,12 @@
 				label="Download"
 			/>
 		</div>
+		<div class="progress" aria-hidden="true">
+			<div
+				class="bar"
+				style:width="{((currentTime ?? 0) / (duration ?? 0)) * 100}%"
+			></div>
+		</div>
 	</div>
 </div>
 
@@ -139,6 +164,7 @@
 		z-index: 900;
 		display: grid;
 		grid-template-columns: 1fr 4rem;
+		grid-template-rows: 1fr auto;
 		filter: drop-shadow(0 0 0.5rem rgb(0 0 0 / 0.75))
 			drop-shadow(0 0 0.125rem rgb(0 0 0 / 0.5));
 	}
@@ -207,8 +233,16 @@
 			height: 2.75rem;
 		}
 	}
+	.progress {
+		height: 0.125rem;
+		grid-column: 1 / -1;
+		.bar {
+			height: 100%;
+			background-color: var(--text-clr);
+		}
+	}
 	@media not (max-width: 40rem) {
-		.actions {
+		.actions > * {
 			display: none;
 		}
 	}
