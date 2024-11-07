@@ -5,7 +5,7 @@ import { error, json } from '@sveltejs/kit'
 async function searchUsers(query: string, options: { fetch: typeof fetch }) {
 	const { fetch } = options
 	const apiQuery = query.replace(/@/g, '')
-	const searchResponse = await fetch(`/api/v0/search?q=${apiQuery}`, {
+	const searchResponse = await fetch(`/api/v0.5/search/users?q=${apiQuery}`, {
 		method: 'POST'
 	})
 	if (!searchResponse.ok) {

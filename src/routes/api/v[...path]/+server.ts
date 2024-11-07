@@ -7,7 +7,7 @@ const LOOPS_PUBLIC_TOKEN = env.LOOPS_PUBLIC_TOKEN
 function canUsePublicToken(request: Request): boolean {
 	const url = new URL(request.url)
 	if (request.method != 'GET') {
-		if (url.pathname == '/api/v0/search' && request.method == 'POST') {
+		if (url.pathname == '/api/v0.5/search/users' && request.method == 'POST') {
 			// why is this POST???
 			return true
 		}
