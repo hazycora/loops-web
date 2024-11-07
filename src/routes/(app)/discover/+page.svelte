@@ -32,6 +32,7 @@
 		background-color: var(--bg-clr);
 		border-block-end: 1px solid var(--border-clr);
 		padding: 0.25rem;
+		padding-block-start: calc(env(safe-area-inset-top) + 0.25rem);
 		top: 0;
 		position: sticky;
 	}
