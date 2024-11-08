@@ -58,8 +58,11 @@ export const actions = {
 		}
 	},
 	logout: async ({ cookies }) => {
-		cookies.delete('token', { path: '/', maxAge: 60 * 60 * 24 * 30,
-                        secure: !ALLOW_HTTP })
+		cookies.delete('token', {
+			path: '/',
+			maxAge: 60 * 60 * 24 * 30,
+			secure: !ALLOW_HTTP
+		})
 		redirect(303, '/')
 	}
 }

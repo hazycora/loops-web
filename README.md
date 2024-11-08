@@ -19,4 +19,3 @@ Edit your `.env` file as necessary. Then, you can simply start the client like t
 ```sh
 pnpm run start
 ```
-
