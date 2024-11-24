@@ -241,7 +241,7 @@
 		}
 	}
 	@media not (max-width: 40rem) {
-		.actions > * {
+		.actions {
 			display: none;
 		}
 	}
