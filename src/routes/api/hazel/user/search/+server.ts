@@ -19,7 +19,7 @@ async function getByUsername(
 	options: { fetch: typeof fetch }
 ) {
 	const { fetch } = options
-	const response = await fetch(`/api/hazel/user/byUsername/${username}`)
+	const response = await fetch(`/api/v0/user/username/${username}`)
 	if (!response.ok) {
 		return null
 	}
