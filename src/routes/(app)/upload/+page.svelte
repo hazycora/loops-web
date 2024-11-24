@@ -39,10 +39,6 @@
 </Page>
 
 <style lang="postcss">
-	h1 {
-		font-size: 1.5rem;
-		margin-block: 0.5rem;
-	}
 	form {
 		display: grid;
 		height: min-content;
