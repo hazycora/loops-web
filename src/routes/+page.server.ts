@@ -21,7 +21,7 @@ export const actions = {
 		const authForm = new FormData()
 		authForm.set('email', email)
 		authForm.set('password', password)
-		authForm.set('build', '4')
+		authForm.set('build', '8')
 		authForm.set('device_name', 'Loops for ios')
 		const authResponse = await fetch('https://loops.video/auth/start', {
 			method: 'POST',
