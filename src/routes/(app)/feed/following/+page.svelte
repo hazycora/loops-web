@@ -7,7 +7,7 @@
 
 <MetaTags
 	value={{
-		title: 'Feed - Loops',
+		title: 'Following - Loops',
 		description: 'A new short-form video platform by Pixelfed'
 	}}
 />
