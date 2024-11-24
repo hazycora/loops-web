@@ -19,8 +19,7 @@
 		{#if form}
 			{#if form.success}
 				<p class="status">
-					Successfully uploaded video <a href="/video/{form.video.id}"
-						>(view it?)</a
+					Successfully uploaded video <a href="/v/{form.video.id}">(view it?)</a
 					>
 				</p>
 			{:else}

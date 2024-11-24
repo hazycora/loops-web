@@ -1,4 +1,5 @@
 import type { Video } from './types'
+import { idToBase64 } from './utils/base64id'
 
 export function downloadVideo(video: Video) {
 	const iosUser = /iPhone|iPad|iPod/i.test(navigator.userAgent)
@@ -23,9 +24,10 @@ export function downloadVideo(video: Video) {
 
 export function shareVideo(video: Video) {
 	const origin = window.origin
-	const videoUrl = `${origin}/video/${video.id}`
+	const shortId = idToBase64(video.id)
+	const videoUrl = `${origin}/v/${shortId}`
 	if ('share' in navigator) {
-		navigator.share({ url: `${origin}/video/${video.id}` })
+		navigator.share({ url: videoUrl })
 		return
 	}
 	if ('clipboard' in <Navigator>navigator) {

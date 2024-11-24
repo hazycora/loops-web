@@ -1,6 +1,7 @@
 import extendPaginated from '$lib/extendPaginated.js'
 import type { Feed, Video } from '$lib/types'
-import { error } from '@sveltejs/kit'
+import { base64ToId, idToBase64 } from '$lib/utils/base64id.js'
+import { error, redirect } from '@sveltejs/kit'
 
 async function loadVideoWithContext(
 	id: string,
@@ -33,6 +34,20 @@ async function loadVideoWithContext(
 }
 
 export async function load({ fetch, params }) {
-	const id = params.id
+	let id = params.id
+
+	// if we moved slower we could've used base64 from the jump, but we didn't know that's how the site was gonna work. now we need to support both.
+	// or we could just break old video URLs, but that's not very nice.
+	//
+	// dunno how long the snowflakes are capable of being when they're turned into decimal integers, so let's just assume
+	// 12 characters is shorter than the smallest possible snowflake?
+
+	if (/[a-zA-Z-_]/.test(id) || id.length <= 12) {
+		id = base64ToId(id)
+	} else {
+		const base64Id = idToBase64(id)
+		redirect(308, `/v/${base64Id}`)
+	}
+
 	return await loadVideoWithContext(id, { fetch })
 }

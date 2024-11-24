@@ -21,7 +21,7 @@
 			<strong class="actor">@{notification.actor.username}</strong>
 			<span>liked your video</span>
 		</a>
-		<a href="/video/{notification.video_id}" class="thumbnail">
+		<a href="/v/{notification.video_id}" class="thumbnail">
 			<img src={notification.video_thumbnail} alt="" />
 		</a>
 	</div>

@@ -6,7 +6,7 @@
 
 <div class="videos">
 	{#each feed.data as video}
-		<a href="/video/{video.id}" class="thumbnail">
+		<a href="/v/{video.id}" class="thumbnail">
 			<img src={video.media.thumbnail} alt="" draggable="false" />
 			{#if video.caption}
 				<span class="caption">{video.caption}</span>

@@ -28,7 +28,7 @@
 	$: self = <Account>$page.data.self
 
 	$: isVideoPage =
-		$page.url.pathname.startsWith('/video/') ||
+		$page.url.pathname.startsWith('/v/') ||
 		$page.url.pathname.startsWith('/feed')
 
 	function onPanelClick(event: Event) {
