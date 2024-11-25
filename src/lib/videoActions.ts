@@ -45,7 +45,7 @@ export async function toggleLikeVideo(video: Video) {
 		method: 'POST'
 	})
 	if (likeResponse.ok) {
-		video.likes += 1
+		video.likes += newState ? 1 : -1
 		video.has_liked = newState
 	} else {
 		video.has_liked = !newState

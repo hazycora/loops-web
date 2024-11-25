@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Heart, ChatCircleText, DownloadSimple, Play } from 'phosphor-svelte'
+	import { Heart, DownloadSimple, Play, ChatDots } from 'phosphor-svelte'
 	import IconButton from './IconButton.svelte'
 	import { page } from '$app/stores'
 	import type { Video } from '$lib/types'
@@ -19,6 +19,11 @@
 	let ready = false
 	let currentTime: number
 	let duration: number
+
+	let videoWidth = 720
+	let videoHeight = 1280
+
+	$: videoIsPortrait = videoHeight > videoWidth * 1.75
 
 	$: {
 		if (videoElement) {
@@ -59,10 +64,13 @@
 		bind:currentTime
 		bind:duration
 		bind:paused
+		bind:videoWidth
+		bind:videoHeight
 		poster={video.media.thumbnail}
 		autoplay={active}
 		loop
 		playsInline
+		class:is-portrait={videoIsPortrait}
 	>
 		<source src={video.media.src_url} />
 	</video>
@@ -86,8 +94,7 @@
 	<div class="interface">
 		<div class="details">
 			<a href="/@{video.account.username}" class="author">
-				<img src={video.account.avatar} alt="" class="avatar" />
-				<span>@{video.account.username}</span>
+				{video.account.name}
 			</a>
 			{#if video.caption}
 				<button class="caption invisible-button" on:click={openPanel}>
@@ -104,25 +111,30 @@
 				on:click={async () => {
 					video = await toggleLikeVideo(video)
 				}}
-				size="3rem"
+				size="2.5rem"
 				weight="regular"
 				icon={Heart}
-				label="like"
-				filled={video.has_liked}
+				label="Like this video along with {video.likes} others"
+				visualLabel={video.likes.toString()}
+				filled
+				color={video.has_liked ? 'var(--favourite-clr)' : undefined}
 			/>
 			<IconButton
 				on:click={openPanel}
-				size="3rem"
+				size="2.5rem"
 				weight="regular"
-				icon={ChatCircleText}
-				label="View comments"
+				icon={ChatDots}
+				label="View {video.comments.toString()} comments"
+				visualLabel={video.comments.toString()}
+				filled
 			/>
 			<IconButton
 				on:click={() => downloadVideo(video)}
-				size="3rem"
+				size="2.5rem"
 				weight="regular"
 				icon={DownloadSimple}
-				label="Download"
+				label="Download video"
+				filled
 			/>
 		</div>
 		<div class="progress" aria-hidden="true">
@@ -152,6 +164,10 @@
 			overflow: hidden;
 
 			place-self: center;
+
+			&.is-portrait {
+				height: 100%;
+			}
 		}
 	}
 
@@ -170,7 +186,7 @@
 	.details {
 		position: relative;
 		isolation: isolate;
-		padding: 1rem 0.5rem;
+		padding: 0.75rem 0.5rem;
 		height: min-content;
 		align-self: end;
 		min-width: 0;
@@ -183,20 +199,12 @@
 		color: inherit;
 		text-decoration: none;
 		width: fit-content;
-		font-size: 0.825rem;
-		font-weight: 600;
-		> img {
-			display: block;
-			width: 100%;
-			aspect-ratio: 1;
-			overflow: hidden;
-			object-fit: cover;
-			border-radius: 100%;
-		}
+		font-size: 1rem;
+		font-weight: 700;
 	}
 	.caption {
 		margin-block: 0;
-		margin-block-start: 0.5rem;
+		margin-block-start: 0.625rem;
 
 		max-width: 100%;
 		overflow: hidden;
@@ -220,22 +228,23 @@
 		flex-direction: column;
 		justify-content: flex-end;
 		align-items: center;
-		gap: 0.5rem;
-		padding-block: 0.5rem;
-		padding-inline: 1rem;
-		> * {
-			width: 2.75rem;
-		}
+		gap: 0.125rem;
+		padding-block: 0.75rem;
+		width: 3.625rem;
 		.avatar {
 			border-radius: 100%;
-			width: 2.75rem;
-			height: 2.75rem;
+			width: 2.875rem;
+			height: 2.875rem;
+			outline: 2px solid white;
+			outline-offset: -1px;
+			margin-block-end: 0.75rem;
 		}
 	}
 	.progress {
 		height: 0.125rem;
 		grid-column: 1 / -1;
 		.bar {
+			width: 0;
 			height: 100%;
 			background-color: var(--text-clr);
 		}

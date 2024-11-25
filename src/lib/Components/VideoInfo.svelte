@@ -71,8 +71,11 @@
 			size="2rem"
 			weight="regular"
 			icon={Heart}
-			label="like"
-			filled={video.has_liked}
+			label="Like this video along with {video.likes} others"
+			visualLabel={video.likes.toString()}
+			direction="row"
+			filled
+			color={video.has_liked ? 'var(--favourite-clr)' : undefined}
 		/>
 		<IconButton
 			disabled={!$page.data.self}
@@ -80,14 +83,16 @@
 			size="2rem"
 			weight="regular"
 			icon={ShareFat}
-			label="share"
+			label="Share video"
+			filled
 		/>
 		<IconButton
 			on:click={() => downloadVideo(video)}
 			size="2rem"
 			weight="regular"
 			icon={DownloadSimple}
-			label="Download"
+			label="Download video"
+			filled
 		/>
 	</div>
 	{#await comments}
@@ -168,8 +173,8 @@
 		}
 	}
 	.actions {
-		display: flex;
-		justify-content: space-around;
+		display: grid;
+		grid-auto-flow: column;
 		border-block-end: 1px solid var(--border-clr);
 	}
 	.comments {

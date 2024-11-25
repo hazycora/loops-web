@@ -17,8 +17,17 @@
 	--muted-clr: rgb(255 255 255 / 0.75);
 	--border-clr: rgb(255 255 255 / 0.2);
 	--primary-clr: #ffe504;
+	--favourite-clr: #ff0050;
 	--button-bg-clr: rgb(255 255 255 / 0.25);
+	--skeleton-clr: rgb(255 255 255 / 0.1);
 	--mobile-nav-height: 4rem;
+}
+
+@media (display-mode: standalone) {
+	:root {
+		height: 100lvh;
+		overscroll-behavior: none;
+	}
 }
 
 body {

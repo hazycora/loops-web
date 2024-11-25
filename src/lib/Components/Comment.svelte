@@ -59,6 +59,7 @@
 	}
 
 	.avatar {
+		background-color: var(--skeleton-clr);
 		border-radius: 100%;
 		width: 2.625rem;
 		height: 2.625rem;

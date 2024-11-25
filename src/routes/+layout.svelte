@@ -81,30 +81,30 @@
 		</div>
 		{#if self}
 			<nav class="mobile">
-				<a href="/feed" class:active={$page.url.pathname == '/feed'}>
-					<House size="2rem" />
+				<a href="/feed" class:active={$page.url.pathname.startsWith('/feed')}>
+					<House weight="fill" size="2rem" />
 					<span class="label">Feed</span>
 				</a>
 				<a href="/discover" class:active={$page.url.pathname == '/discover'}>
-					<Compass size="2rem" />
+					<Compass weight="fill" size="2rem" />
 					<span class="label">Discover</span>
 				</a>
 				<a href="/upload" class:active={$page.url.pathname == '/upload'}>
-					<UploadSimple size="2rem" />
+					<UploadSimple weight="fill" size="2rem" />
 					<span class="label">Upload</span>
 				</a>
 				<a
 					href="/notifications"
 					class:active={$page.url.pathname == '/notifications'}
 				>
-					<Bell size="2rem" />
+					<Bell weight="fill" size="2rem" />
 					<span class="label">Notifications</span>
 				</a>
 				<a
 					href="/@{self.username}"
 					class:active={$page.url.pathname.startsWith(`/@${self.username}`)}
 				>
-					<User size="2rem" />
+					<User weight="fill" size="2rem" />
 					<span class="label">Profile</span>
 				</a>
 			</nav>
@@ -202,11 +202,12 @@
 	}
 
 	nav.mobile {
-		padding: 0.25rem;
+		padding: 0.5rem 0.25rem;
 		width: 100%;
 		display: flex;
 		justify-content: space-around;
 		border-block-start: 1px solid var(--border-clr);
+		padding-block-end: calc(env(safe-area-inset-bottom) + 0.25rem);
 		a {
 			width: 100%;
 			color: inherit;
@@ -216,6 +217,7 @@
 			align-items: center;
 			.label {
 				font-size: 0.625rem;
+				font-weight: 600;
 			}
 		}
 		.active {
@@ -232,6 +234,7 @@
 		backdrop-filter: blur(0.5rem);
 		background-color: rgb(0 0 0 / 0.5);
 		.info {
+			box-shadow: 0 0 1rem 0.25rem rgb(0 0 0 / 0.5);
 			background-color: black;
 			overflow: hidden;
 			border-start-start-radius: 0.5rem;
