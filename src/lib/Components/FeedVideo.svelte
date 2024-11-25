@@ -238,7 +238,7 @@
 			border-radius: 100%;
 			width: 2.875rem;
 			height: 2.875rem;
-			outline: 2px solid white;
+			outline: 2px solid var(--text-clr);
 			outline-offset: -1px;
 			margin-block-end: 0.75rem;
 		}

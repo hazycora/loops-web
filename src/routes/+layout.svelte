@@ -235,7 +235,7 @@
 		background-color: rgb(0 0 0 / 0.5);
 		.info {
 			box-shadow: 0 0 1rem 0.25rem rgb(0 0 0 / 0.5);
-			background-color: black;
+			background-color: var(--bg-clr);
 			overflow: hidden;
 			border-start-start-radius: 0.5rem;
 			border-start-end-radius: 1rem;
