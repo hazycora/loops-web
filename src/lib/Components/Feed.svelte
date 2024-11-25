@@ -48,16 +48,18 @@
 </script>
 
 <div class="player-wrapper">
-	<div class="feeds">
-		{#each feeds as feed}
-			<a
-				href="/feed/{feed.id}"
-				class:active={$page.url.pathname == `/feed/${feed.id}`}
-			>
-				{feed.title}
-			</a>
-		{/each}
-	</div>
+	{#if $page.data.self}
+		<div class="feeds">
+			{#each feeds as feed}
+				<a
+					href="/feed/{feed.id}"
+					class:active={$page.url.pathname == `/feed/${feed.id}`}
+				>
+					{feed.title}
+				</a>
+			{/each}
+		</div>
+	{/if}
 	<div
 		bind:this={feedElement}
 		bind:clientHeight
