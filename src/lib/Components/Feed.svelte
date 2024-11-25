@@ -48,7 +48,7 @@
 </script>
 
 <div class="player-wrapper">
-	{#if $page.data.self}
+	{#if $page.data.self && $page.url.pathname.startsWith('/feed/')}
 		<div class="feeds">
 			{#each feeds as feed}
 				<a
