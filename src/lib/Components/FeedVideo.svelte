@@ -165,8 +165,11 @@
 
 			place-self: center;
 
-			&.is-portrait {
-				height: 100%;
+			@media (max-width: 40rem) {
+				&.is-portrait {
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
 	}
