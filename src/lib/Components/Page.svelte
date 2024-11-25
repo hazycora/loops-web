@@ -16,6 +16,21 @@
 </div>
 
 <style lang="postcss">
+	.page {
+		position: relative;
+		/* block seeing the scrollbar above the top of the header. this could otherwise happen due to overscroll, like in iOS */
+		&::before {
+			content: '';
+			position: absolute;
+			display: block;
+			background-color: var(--bg-clr);
+			top: -100vh;
+			height: 100vh;
+			inset-inline: 0;
+
+			z-index: 9999;
+		}
+	}
 	header {
 		background-color: rgb(0 0 0 / 0.75);
 		backdrop-filter: blur(10px);
