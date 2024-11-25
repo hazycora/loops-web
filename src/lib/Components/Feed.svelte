@@ -5,6 +5,12 @@
 
 	import VideoInfo from './VideoInfo.svelte'
 	import type { Feed, Video } from '$lib/types'
+	import { page } from '$app/stores'
+
+	let feeds = [
+		{ id: 'following', title: 'Following' },
+		{ id: 'for-you', title: 'For You' }
+	]
 
 	export let feed: Feed
 	export let startIndex = 0
@@ -42,6 +48,16 @@
 </script>
 
 <div class="player-wrapper">
+	<div class="feeds">
+		{#each feeds as feed}
+			<a
+				href="/feed/{feed.id}"
+				class:active={$page.url.pathname == `/feed/${feed.id}`}
+			>
+				{feed.title}
+			</a>
+		{/each}
+	</div>
 	<div
 		bind:this={feedElement}
 		bind:clientHeight
@@ -68,10 +84,49 @@
 		overflow: hidden;
 		margin-inline: auto;
 		align-self: center;
-
+		position: relative;
 		width: 100%;
 		height: 100%;
 	}
+
+	.feeds {
+		position: absolute;
+		inset-block-start: env(safe-area-inset-top, 0);
+		inset-inline: 0;
+		z-index: 101;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		font-weight: 700;
+		font-size: 1.125rem;
+		padding: 0.5rem 0;
+
+		filter: drop-shadow(0 0 0.5rem rgb(0 0 0 / 0.75))
+			drop-shadow(0 0 0.125rem rgb(0 0 0 / 0.5));
+
+		@media not (max-width: 40rem) {
+			width: 50%;
+		}
+
+		> a {
+			color: inherit;
+			text-decoration: none;
+			&.active {
+				color: var(--primary-clr);
+			}
+			&.active::after {
+				margin-inline: auto;
+				margin-block-start: 0.25rem;
+				display: block;
+				content: '';
+				width: 2rem;
+				height: 0.125rem;
+				background-color: currentColor;
+				border-radius: 0.25rem;
+			}
+		}
+	}
+
 	.feed {
 		width: 100%;
 		min-width: 0;
