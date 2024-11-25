@@ -1,5 +1,7 @@
 <script lang="ts">
 	import MetaTags from '$lib/Components/MetaTags.svelte'
+
+	export let form
 </script>
 
 <MetaTags
@@ -15,12 +17,29 @@
 		<p>An unofficial client for <a href="https://loops.video">Loops</a></p>
 		<label>
 			Email
-			<input type="text" name="email" placeholder="jane@example.com" />
+			<input
+				value={form?.email ?? ''}
+				type="text"
+				name="email"
+				placeholder="jane@example.com"
+			/>
 		</label>
 		<label>
 			Password
-			<input type="password" name="password" placeholder="****" />
+			<input
+				value={form?.password ?? ''}
+				type="password"
+				name="password"
+				placeholder="****"
+			/>
 		</label>
+		{#if form?.['2FC']}
+			<label>
+				2FA code
+				<!-- svelte-ignore a11y-autofocus -->
+				<input autofocus name="code" type="text" placeholder="123456" />
+			</label>
+		{/if}
 		<input type="submit" value="Log in" />
 		<p>
 			<a href="https://git.gay/h/loops-web">source code</a>

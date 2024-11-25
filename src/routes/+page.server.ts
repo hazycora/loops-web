@@ -15,6 +15,7 @@ export const actions = {
 		const data = await request.formData()
 		const email = data.get('email')
 		const password = data.get('password')
+		const code = data.get('code')
 		if (!email || !password) {
 			error(400, 'Email and password are required.')
 		}
@@ -22,21 +23,37 @@ export const actions = {
 		authForm.set('email', email)
 		authForm.set('password', password)
 		authForm.set('build', '8')
+		if (code) {
+			authForm.set('code', code)
+		}
+
+		const authRequestUrl = code ? '/auth/2fa/verify' : '/auth/start'
+
 		authForm.set('device_name', 'Loops for ios')
-		const authResponse = await fetch('https://loops.video/auth/start', {
+		const authResponse = await fetch(authRequestUrl, {
 			method: 'POST',
-			headers: {
-				'User-Agent': 'Loops/4 CFNetwork/1568.100.1.2.1 Darwin/24.0.0'
-			},
 			body: authForm
 		})
 		if (
 			!authResponse.ok ||
 			authResponse.headers.get('content-type') !== 'application/json'
 		) {
-			const { message } = await authResponse.json()
-			console.error('Failed to log in.', message)
-			error(500, 'Logging in failed: ' + message)
+			const data = await authResponse.json()
+			if ('message' in data) {
+				const { message } = data
+				console.error('Failed to log in.', message)
+				error(500, 'Logging in failed: ' + message)
+			}
+			if (data['2FC'] && data['chp'] === 1) {
+				return {
+					email: email,
+					password: password,
+
+					'2FC': true
+				}
+			}
+			console.error('Failed to log in.', data)
+			error(500, 'Logging in failed.')
 		}
 		const tokenData = <{ auth_token: string }>await authResponse.json()
 		cookies.set('token', tokenData.auth_token, {
