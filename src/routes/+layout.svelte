@@ -19,6 +19,8 @@
 	import Button from '$lib/Components/Button.svelte'
 	import { onNavigate } from '$app/navigation'
 	import { mobile } from '$lib/stores'
+	import NotchSticker from '$lib/Components/NotchSticker.svelte'
+	import device from '$lib/device'
 
 	const videoPanel = writable<Video | undefined>(undefined)
 	setContext('videoPanel', videoPanel)
@@ -55,6 +57,10 @@
 		}
 	})
 </script>
+
+{#if $page.data.self && device.iPhone && device.installed}
+	<NotchSticker />
+{/if}
 
 <div class="app">
 	<nav class="logged-out" class:desktop={self}>
