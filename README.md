@@ -1,6 +1,6 @@
 # loops-web
 
-cause dansup is taking a little while
+A FOSS Loops frontend for the web.
 
 # Installation
 
