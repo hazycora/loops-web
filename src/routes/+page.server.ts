@@ -22,7 +22,7 @@ export const actions = {
 		const authForm = new FormData()
 		authForm.set('email', email)
 		authForm.set('password', password)
-		authForm.set('build', '8')
+		authForm.set('build', '10')
 		if (code) {
 			authForm.set('code', code)
 		}
